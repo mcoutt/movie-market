@@ -1,15 +1,16 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import propTypes from "prop-types";
 import { Popup } from "../popup";
 
 import "./movieItem.scss";
 import "../popup/popup-movie.scss";
+import { HeaderItem } from "../header/header";
 
 const imageUrl = (img) => `https://image.tmdb.org/t/p/w500${img}`;
 
 export default function MovieItem({ item }) {
-  const [showEditPopup, setShowEditPopup] = React.useState(false);
-  const [showDelPopup, setShowDelPopup] = React.useState(false);
+  const [showEditPopup, setShowEditPopup] = useState(false);
+  const [showDelPopup, setShowDelPopup] = useState(false);
 
   const handleEditOpen = () => {
     setShowEditPopup(true);
@@ -27,7 +28,11 @@ export default function MovieItem({ item }) {
     setShowDelPopup(false);
   };
 
-  React.useEffect(() => {
+  const handleShowDetail = () => {
+    <HeaderItem movieItem={item} />;
+  };
+
+  useEffect(() => {
     setShowEditPopup(showEditPopup);
     setShowDelPopup(showDelPopup);
   }, [showEditPopup, showDelPopup]);
@@ -35,7 +40,12 @@ export default function MovieItem({ item }) {
   console.log(item.id);
   return (
     <div className="MoviesList-item" key={item.id}>
-      <img src={imageUrl(item.poster_path)} className="film" alt={item.title} />
+      <img
+        src={imageUrl(item.poster_path)}
+        onClick={handleShowDetail}
+        className="film"
+        alt={item.title}
+      />
       <h5 onClick={handleEditOpen}>{item.title}</h5>
       <span onClick={handleEditOpen}>{item.overview}</span>
       <button type="button" className="" onClick={handleDelOpen}>

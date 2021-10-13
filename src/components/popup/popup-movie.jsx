@@ -1,21 +1,11 @@
-import React from "react";
-import { act } from "react-dom/test-utils";
+import React, { useState } from "react";
 import "./popup-movie.scss";
 
 export const Popup = ({ item, action, closePopup }) => {
-  const [showPopup, setShowPopup] = React.useState(false);
-  const [selectedDate, setSelectedDate] = React.useState(new Date());
-  const [selectedGenre, setSelectedGenre] = React.useState({ genre: "" });
-  const [submitForm, setSubmit] = React.useState();
-  const [resetForm, setReset] = React.useState();
-
-  const handleOpen = () => {
-    setShowPopup(true);
-  };
-
-  const handleClose = () => {
-    setShowPopup(false);
-  };
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedGenre, setSelectedGenre] = useState({ genre: "" });
+  const [submitForm, setSubmit] = useState();
+  const [resetForm, setReset] = useState();
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -35,10 +25,6 @@ export const Popup = ({ item, action, closePopup }) => {
     alert("Results: " + submitForm);
     event.preventDefault();
   };
-
-  React.useEffect(() => {
-    setShowPopup(showPopup);
-  }, [showPopup]);
 
   const handleTitle = (e) => {};
 

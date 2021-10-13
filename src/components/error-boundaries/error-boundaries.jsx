@@ -30,7 +30,7 @@ export default class ErrorBoundry extends Component {
             {console.log(this.state.error)}
             {console.log(this.state.errorInfo.toString())}
             <p>{`ErrorInfo boundry is: ${
-              this.state.errorInfo ? this.state.errorInfo : "none"
+              this.state.errorInfo ? this.state.errorInfo.toString() : "none"
             }`}</p>
             <p>{`Error boundry is: ${
               this.state.error ? this.state.error : "none"
