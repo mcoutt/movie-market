@@ -13,6 +13,12 @@ const reducer = (state = initialState, action) => {
         ...state,
         movie: action.payload,
       };
+    case "SET_HEADER_MOVIE":
+      return {
+        ...state,
+        header: action.payload,
+      };
+
     case "GET_MOVIE_DETAILS":
       return {
         ...state,

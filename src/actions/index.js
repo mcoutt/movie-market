@@ -12,6 +12,13 @@ const setMovieDetails = (movie) => {
   };
 };
 
+const setHeaderMovie = (edit) => {
+  return {
+    type: "SET_HEADER_MOVIE",
+    payload: edit,
+  };
+};
+
 const getMovieDetails = (movie) => {
   return {
     type: "GET_MOVIE_DETAILS",
@@ -26,4 +33,10 @@ const delMovieDetails = (movie) => {
   };
 };
 
-export { moviesLoaded, setMovieDetails, getMovieDetails, delMovieDetails };
+export {
+  moviesLoaded,
+  setMovieDetails,
+  getMovieDetails,
+  delMovieDetails,
+  setHeaderMovie,
+};

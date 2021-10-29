@@ -9,29 +9,38 @@ import { connect } from "react-redux";
 
 // import "./header.scss";
 
-const HeaderItem = ({ movie }) => {
+const HeaderItem = ({ movie, header }) => {
   const [showSearch, setShowSearch] = useState(false);
 
   const handleSearchLogo = (search) => {
     setShowSearch(search);
   };
   return (
-    <div>
-      <Logo showSearch={showSearch} handleSearchLogo={handleSearchLogo} />
-      {movie ? (
-        <div>
-          <MovieItem item={movie} />
+    <section className="py-5 text-center container">
+      <div className="row py-lg-5">
+        <div className="col-lg-6 col-md-8 mx-auto">
+          <h1 className="fw-light">Album example</h1>
+          <p className="lead text-muted">
+            Something short and leading about the collection below—its contents.
+          </p>
+          <Logo showSearch={showSearch} handleSearchLogo={handleSearchLogo} />
+          {header ? (
+            <div>
+              <MovieItem item={movie} />
+            </div>
+          ) : (
+            <SearchItem />
+          )}
         </div>
-      ) : (
-        <SearchItem />
-      )}
-    </div>
+      </div>
+    </section>
   );
 };
 
-const mapStateToProps = ({ movie }) => {
+const mapStateToProps = ({ movie, header }) => {
   return {
     movie,
+    header,
   };
 };
 

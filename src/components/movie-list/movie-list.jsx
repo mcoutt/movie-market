@@ -14,10 +14,12 @@ const MovieList = (props) => {
   }, []);
 
   return (
-    <div>
-      {props.movies.length > 0
-        ? props.movies.map((item) => <MovieItem item={item} key={item.id} />)
-        : null}
+    <div className="container">
+      <div className="row row-cols-1 row-cols-md-2 g-4">
+        {props.movies.length > 0
+          ? props.movies.map((item) => <MovieItem item={item} key={item.id} />)
+          : null}
+      </div>
     </div>
   );
 };

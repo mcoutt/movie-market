@@ -1,25 +1,20 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useState } from "react";
 import propTypes from "prop-types";
 import { Popup } from "../popup-movie";
 
-// import "./movie-item.scss";
+import "./movie-item.scss";
 import "../popup-movie/popup-movie.scss";
 import { bindActionCreators } from "redux";
-import { setMovieDetails } from "../../actions";
+import { setMovieDetails, setHeaderMovie } from "../../actions";
 import { compose } from "../../utils";
 import { withMoviestoreService } from "../hoc";
 import { connect } from "react-redux";
-import HeaderItem from "../header";
 
 const imageUrl = (img) => `https://image.tmdb.org/t/p/w500${img}`;
 
 const MovieItem = (props) => {
   const [showEditPopup, setShowEditPopup] = useState(false);
   const [showDelPopup, setShowDelPopup] = useState(false);
-  const [middleActive, setMiddleActive] = useState(false);
-  const [crossActive, setCrossActive] = useState(false);
-  const [dropdownActive, setDropdownActive] = useState(false);
-  const [itemDetails, setItemDetails] = useState({});
 
   const { item } = props;
 
@@ -27,11 +22,8 @@ const MovieItem = (props) => {
     const { moviestoreService } = props;
     const data = await moviestoreService.getMovie(item.id);
 
-    setItemDetails(true);
     props.setMovieDetails(data);
   };
-
-  useEffect(() => {}, []);
 
   const handleEditOpen = async () => {
     await getMovie();
@@ -52,76 +44,59 @@ const MovieItem = (props) => {
 
   const handleShowDetail = async () => {
     await getMovie();
+    props.setHeaderMovie(true);
   };
 
   // const kebab = document.querySelector('.kebab'),
   //   middle = document.querySelector('.middle'),
   //   cross = document.querySelector('.cross'),
   //   dropdown = document.querySelector('.dropdown');
-
+  //
   // kebab.addEventListener('click', function () {
   //   middle.classList.toggle('active');
   //   cross.classList.toggle('active');
   //   dropdown.classList.toggle('active');
   // });
 
-  const toggleMiddleActive = () => {
-    return middleActive ? setMiddleActive(false) : setMiddleActive(true);
-  };
-
-  const toggleCrossActive = () => {
-    return crossActive ? setCrossActive(false) : setCrossActive(true);
-  };
-
-  const toggleDropdownActive = () => {
-    return dropdownActive ? setDropdownActive(false) : setDropdownActive(true);
-  };
-
-  let showItem;
   if (item.budget) {
-    showItem = (
-      <div className="row">
-        <div className="col-3">
-          <img
-            src={imageUrl(item.poster_path)}
-            onClick={handleShowDetail}
-            className="film"
-            alt={item.title}
-          />
-        </div>
-        <div className="col-8">
-          <h5 onClick={handleEditOpen}>{item.title}</h5>
-          <span onClick={() => <HeaderItem movieItem={item} />}>
-            {item.overview}
-          </span>
-          <p>Vote average: {item.vote_average}</p>
-          <p>Vote count: {item.vote_count}</p>
-          <p>Release date: {item.release_date}</p>
-          <p>Budget: {item.budget}</p>
-          <p>Revenue: {item.revenue}</p>
-          <p>Runtime: {item.runtime}</p>
-          <p>Genres: {item.genres.map((item) => item.name)}</p>
-        </div>
+    return (
+      <div className="col">
+        <img
+          src={imageUrl(item.poster_path)}
+          onClick={handleShowDetail}
+          className="film"
+          alt={item.title}
+        />
+        <h5 onClick={handleEditOpen}>{item.title}</h5>
+        <span>{item.overview}</span>
+        <p>Vote average: {item.vote_average}</p>
+        <p>Vote count: {item.vote_count}</p>
+        <p>Release date: {item.release_date}</p>
+        <p>Budget: {item.budget}</p>
+        <p>Revenue: {item.revenue}</p>
+        <p>Runtime: {item.runtime}</p>
+        <p>Genres: {item.genres.map((item) => item.name)}</p>
       </div>
     );
   } else {
-    showItem = (
-      <Fragment>
-        <div className="row">
-          <div className="col">
-            <img
-              src={imageUrl(item.poster_path)}
-              onClick={handleShowDetail}
-              className="film"
-              alt={item.title}
-            />
-            <h5 onClick={handleEditOpen}>{item.title}</h5>
-            <span onClick={handleEditOpen}>{item.overview}</span>
-            <p>Vote average: {item.vote_average}</p>
-            <p>Vote count: {item.vote_count}</p>
-            <p>Release date: {item.release_date}</p>
-          </div>
+    return (
+      <div className="card">
+        <img
+          src={imageUrl(item.poster_path)}
+          onClick={handleShowDetail}
+          className="card-img-top img"
+          alt={item.title}
+        />
+        <div className="card-body">
+          <h5 className="card-title">{item.title}</h5>
+          <p className="card-text">{item.overview}</p>
+          <p className="card-text">Release date: {item.release_date}</p>
+          <p className="card-text">Vote average: {item.vote_average}</p>
+          <p className="card-text">Vote count: {item.vote_count}</p>
         </div>
+        <button type="button" className="edit" onClick={handleEditOpen}>
+          EDIT MOVIE
+        </button>
         <button type="button" className="del" onClick={handleDelOpen}>
           DEL MOVIE
         </button>
@@ -135,10 +110,9 @@ const MovieItem = (props) => {
         {showDelPopup ? (
           <Popup item={props.movie} action="del" closePopup={handleDelClose} />
         ) : null}
-      </Fragment>
+      </div>
     );
   }
-  return showItem;
 };
 
 MovieItem.propTypes = {
@@ -168,6 +142,7 @@ const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
       setMovieDetails,
+      setHeaderMovie,
     },
     dispatch
   );

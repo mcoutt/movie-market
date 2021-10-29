@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 
 const Logo = (props) => {
   const [showPopup, setShowPopup] = useState(false);
-  const { movie, handleSearchLogo, showSearch, movies } = props;
+  const { movie, showSearch, movies } = props;
   const handleOpen = () => {
     setShowPopup(true);
   };
@@ -19,13 +19,11 @@ const Logo = (props) => {
   };
 
   const handleSearch = () => {
-    // handleSearchLogo(true);
     props.delMovieDetails(movies);
   };
 
   let renderButton;
   if (movie && !showSearch) {
-    // renderButton = <i onClick={handleSearch} className="gg-search"></i>;
     renderButton = (
       <svg
         xmlns="http://www.w3.org/2000/svg"
