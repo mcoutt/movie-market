@@ -1,8 +1,8 @@
-import React from 'react';
-import Modal from '@material-ui/core/Modal';
-import {makeStyles} from '@material-ui/core/styles';
-import 'date-fns';
-import './item-modal-delete.scss';
+import React from "react";
+import Modal from "@material-ui/core/Modal";
+import { makeStyles } from "@material-ui/core/styles";
+import "date-fns";
+import "./item-modal-delete.scss";
 
 function rand() {
   return Math.round(0.2198524788701166 * 20) - 10;
@@ -21,11 +21,11 @@ function getModalStyle() {
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    position: 'absolute',
+    position: "absolute",
     width: 600,
     height: 800,
-    backgroundColor: '#232323',
-    border: '2px solid #000',
+    backgroundColor: "#232323",
+    border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
@@ -48,13 +48,18 @@ export default function ItemDelete() {
   const body = (
     <form>
       <div style={modalStyle} className={classes.paper}>
-        <div className='del'>
+        <div className="del">
           <label>DELETE MOVIE</label>
         </div>
         <div>
           <label>
-            <p className='titles'>TITLE</p>
-            <input type='text' name='title' className='input-data-area placeholders' placeholder='Moana'/>
+            <p className="titles">TITLE</p>
+            <input
+              type="text"
+              name="title"
+              className="input-data-area placeholders"
+              placeholder="Moana"
+            />
           </label>
         </div>
       </div>
@@ -63,7 +68,7 @@ export default function ItemDelete() {
 
   return (
     <div>
-      <button type="button" className='header-button' onClick={handleOpen}>
+      <button type="button" className="header-button" onClick={handleOpen}>
         - DELETE MOVIE
       </button>
       <Modal

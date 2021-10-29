@@ -1,6 +1,27 @@
-.MoviesList {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  padding: 16px;
+.moviesList {
+  position: absolute;
+  width: 1200px;
+  height: 1307px;
+  left: 58px;
+  top: 464px;
+
+  background: #232323;
+  //display: flex;
+  //flex-wrap: wrap;
+  //justify-content: space-between;
+  // padding: 16px;
+  // margin-top: 20em;
+}
+
+.context {
+  width: 1200px;
+  height: 1307px;
+  margin-top: 5px;
+  //left: 58px;
+  //top: 54px;
+
+  //background: #232323;
+  //background: green;
+  // padding: 16px;
+  // margin-top: 20em;
 }

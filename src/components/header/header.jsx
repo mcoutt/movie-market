@@ -1,27 +1,44 @@
-import React from "react";
-import { ItemAdd } from "../item-add";
+import React, { useState } from "react";
+import Logo from "../logo";
 import MovieItem from "../movie-item";
-import "./header.scss";
+import { SearchItem } from "../search-item";
+import { bindActionCreators } from "redux";
+import { getMovieDetails } from "../../actions";
+import { withMoviestoreService } from "../hoc";
+import { connect } from "react-redux";
 
-export function HeaderItem(movieItem) {
-  console.log("--------------");
-  let result;
-  if (!movieItem) {
-    result = (
-      <header className="logo logo-image">
-        <ItemAdd />
-        <form>
-          <label>
-            <input type="text" name="search" className="search"></input>
-          </label>
-          <button type="submit" className="search-button">
-            SEARCH
-          </button>
-        </form>
-      </header>
-    );
-  } else {
-    result = <MovieItem item={movieItem} />;
-  }
-  return result;
-}
+// import "./header.scss";
+
+const HeaderItem = ({ movie }) => {
+  const [showSearch, setShowSearch] = useState(false);
+
+  const handleSearchLogo = (search) => {
+    setShowSearch(search);
+  };
+  return (
+    <div>
+      <Logo showSearch={showSearch} handleSearchLogo={handleSearchLogo} />
+      {movie ? (
+        <div>
+          <MovieItem item={movie} />
+        </div>
+      ) : (
+        <SearchItem />
+      )}
+    </div>
+  );
+};
+
+const mapStateToProps = ({ movie }) => {
+  return {
+    movie,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({ getMovieDetails }, dispatch);
+};
+
+export default withMoviestoreService()(
+  connect(mapStateToProps, mapDispatchToProps)(HeaderItem)
+);

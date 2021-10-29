@@ -1,3 +1,1 @@
-import ContentItem from './content';
-
-export default ContentItem;
+export * from "./content";

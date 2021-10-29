@@ -1,13 +1,25 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './components/app';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./components/app";
+import { Provider } from "react-redux";
+import reportWebVitals from "./reportWebVitals";
+import ErrorBoundry from "./components/error-boundaries";
+import store from "./store";
+import MoviestoreService from "./services/moviestore-service";
+import { MoviestoreServiceProvider } from "./components/moviestore-service-context";
+
+const moviestoreService = new MoviestoreService();
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+  <Provider store={store}>
+    <ErrorBoundry>
+      <MoviestoreServiceProvider value={moviestoreService}>
+        <App />
+      </MoviestoreServiceProvider>
+    </ErrorBoundry>
+  </Provider>,
+
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

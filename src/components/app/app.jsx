@@ -1,22 +1,10 @@
-import React, { Fragment } from "react";
-import { HeaderItem } from "../header";
-import ContentItem from "../content";
-import FooterItem from "../footer";
-import ErrorBoundry from "../error-boundaries";
+import React from "react";
+import { HomePage } from "../pages";
+
 import "./app.scss";
 
 function App() {
-  return (
-    <ErrorBoundry>
-      <Fragment>
-        <div className="container">
-          <HeaderItem />
-          <ContentItem />
-          <FooterItem />
-        </div>
-      </Fragment>
-    </ErrorBoundry>
-  );
+  return <HomePage />;
 }
 
 export default App;

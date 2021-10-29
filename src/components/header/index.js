@@ -1,1 +1,3 @@
-export * from "./header";
+import HeaderItem from "./header";
+
+export default HeaderItem;

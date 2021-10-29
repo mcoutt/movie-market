@@ -1,0 +1,60 @@
+.logoHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.firstLogo {
+  color: red;
+  font-size: larger;
+  font-weight: bold;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.secondLogo {
+  color: red;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.header-button {
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border-radius: 3px;
+  border-color: #f65261;
+  cursor: pointer;
+  overflow: hidden;
+  width: 150px;
+  height: 40px;
+  font-size: large;
+  color: #f65261;
+  margin-left: 1200px;
+  margin-top: 20px;
+}
+
+.gg-search {
+  color: red;
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  transform: scale(var(--ggs, 1));
+  width: 16px;
+  height: 16px;
+  border: 2px solid;
+  border-radius: 100%;
+  margin-left: -4px;
+  margin-top: -4px;
+}
+
+.gg-search::after {
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  border-radius: 3px;
+  width: 2px;
+  height: 8px;
+  background: currentColor;
+  transform: rotate(-45deg);
+  top: 10px;
+  left: 12px;
+}

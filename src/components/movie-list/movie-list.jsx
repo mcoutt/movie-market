@@ -1,12 +1,42 @@
-import React from 'react';
-import { dummyFilmsList } from './dummy-films';
+import React, { useEffect } from "react";
+import MovieItem from "../movie-item";
+import { connect } from "react-redux";
+import { withMoviestoreService } from "../hoc";
+import { moviesLoaded } from "../../actions";
+import { bindActionCreators } from "redux";
 
-import MovieItem from '../movie-item';
+const MovieList = (props) => {
+  useEffect(async () => {
+    const { moviestoreService } = props;
+    const data = await moviestoreService.getMovies();
 
+    props.moviesLoaded(data);
+  }, []);
 
-export default function MovieList() {
-  return <div className="MoviesList">
-    {dummyFilmsList.map((item) => <MovieItem item={item}/>)};
-  </div>;
-}
+  return (
+    <div>
+      {props.movies.length > 0
+        ? props.movies.map((item) => <MovieItem item={item} key={item.id} />)
+        : null}
+    </div>
+  );
+};
 
+const mapStateToProps = ({ movies }) => {
+  return {
+    movies,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(
+    {
+      moviesLoaded,
+    },
+    dispatch
+  );
+};
+
+export default withMoviestoreService()(
+  connect(mapStateToProps, mapDispatchToProps)(MovieList)
+);

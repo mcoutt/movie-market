@@ -1,0 +1,29 @@
+
+.row {
+  height: 300px;
+
+}
+
+.searchInput {
+  width: 40%;
+  padding: 12px 2px;
+  margin-left: 350px;
+  box-sizing: border-box;
+  background-color: gray;
+  border: none;
+}
+
+.searchButton {
+  background-color: #f65261;
+  background-repeat: repeat;
+  border-radius: 3px;
+  border-color: #f65261;
+  cursor: pointer;
+  overflow: hidden;
+  width: 150px;
+  height: 40px;
+  font-size: large;
+  color: white;
+  margin-left: 1px;
+  margin-top: 20px;
+}

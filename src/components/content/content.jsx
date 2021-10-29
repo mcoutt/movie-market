@@ -1,10 +1,8 @@
-import React from 'react';
-import MovieList from '../movie-list';
+import React from "react";
+import MovieList from "../movie-list";
 
-import './content.scss';
+// import "./content.scss";
 
-export default function ContentItem() {
-  return (
-    <MovieList/>
-  );
-}
+export const ContentItem = () => {
+  return <MovieList />;
+};

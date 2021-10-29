@@ -1,4 +1,15 @@
-.App {
-  text-align: center;
-  padding-top: 36px;
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+html {
+  font-size: 10px;
+  //outline: none;
+}
+
+
+body {
+  background-color: #232323;
+  font-size: 1.8rem;
 }

@@ -1,13 +1,10 @@
-import React from 'react';
-import './footer.scss';
+import React from "react";
+import "./footer.scss";
 
-
-export default function FooterItem() {
+export const FooterItem = () => {
   return (
-    <footer>
-      <div className="footer-logo">
-        MOVIEStore
-      </div>
-    </footer>
+    <div className="col">
+      <div>MOVIEStore</div>
+    </div>
   );
-}
+};
