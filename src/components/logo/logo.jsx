@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Popup } from "../popup-movie";
+import Popup from "../popup-movie";
 
 import "./logo.scss";
 import { bindActionCreators } from "redux";
-import { delMovieDetails, getMovieDetails } from "../../actions";
+import { deleteMovie, getMovieDetails } from "../../actions";
 import { withMoviestoreService } from "../hoc";
 import { connect } from "react-redux";
 
@@ -19,7 +19,7 @@ const Logo = (props) => {
   };
 
   const handleSearch = () => {
-    props.delMovieDetails(movies);
+    props.deleteMovie(movies);
   };
 
   let renderButton;
@@ -67,7 +67,7 @@ const mapStateToProps = ({ movie, movies }) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ getMovieDetails, delMovieDetails }, dispatch);
+  return bindActionCreators({ getMovieDetails, deleteMovie }, dispatch);
 };
 
 export default withMoviestoreService()(

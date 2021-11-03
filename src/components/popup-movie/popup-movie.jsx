@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { components, default as ReactSelect } from "react-select";
 import "./popup-movie.scss";
+import { compose } from "../../utils";
+import { withMoviestoreService } from "../hoc";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { createMovie, editMovie, deleteMovie } from "../../actions";
 
 const Option = (props) => {
   return (
@@ -17,7 +22,20 @@ const Option = (props) => {
   );
 };
 
-export const Popup = ({ item, action, closePopup }) => {
+const Popup = (props) => {
+  const { item, action, closePopup } = props;
+
+  const movie = {
+    title: "",
+    overview: "",
+    poster_path: "",
+    release_date: "",
+    revenue: 0,
+    runtime: 0,
+    genres: [],
+    action: "",
+  };
+
   const [title, setTitle] = useState("");
   const [releaseDate, setReleaseDate] = useState("");
   const [url, setUrl] = useState("");
@@ -26,6 +44,8 @@ export const Popup = ({ item, action, closePopup }) => {
   const [overview, setOverview] = useState("");
   const [genres, setGenres] = useState([]);
   const [itemDetail, setItemDetail] = useState(item);
+  const [movieItem, setMovieItem] = useState(movie);
+  const [deleteItem, setDeleteItem] = useState("");
 
   const handleTitle = (event) => {
     setTitle(event.target.value);
@@ -61,7 +81,7 @@ export const Popup = ({ item, action, closePopup }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const newMovie = {
+    const movie = {
       title,
       overview,
       poster_path: url,
@@ -69,19 +89,22 @@ export const Popup = ({ item, action, closePopup }) => {
       revenue: rating,
       runtime,
       genres,
+      action,
     };
-    console.log(newMovie);
+    console.log(movie);
+    const { name, value } = event.target;
+    setMovieItem({ ...movieItem, movie });
   };
-
   const handleDelSubmit = (event) => {
-    console.log("&&&&&&&");
-    console.log(item);
-    event.preventDefault();
+    // event.preventDefault();
+    setDeleteItem(itemDetail.id);
   };
 
-  useEffect(() => {
+  useEffect(async () => {
+    await props.createMovie(movieItem);
+    await props.deleteMovie(deleteItem);
     setItemDetail(item);
-  }, [setItemDetail]);
+  }, [setItemDetail, movieItem, deleteItem]);
 
   const header =
     action === "add"
@@ -133,8 +156,8 @@ export const Popup = ({ item, action, closePopup }) => {
     if (editItem) {
       genreOptions = itemDetail.genres.map((item) => {
         return {
-          value: item.id.toString(),
-          label: item.name,
+          value: item.toLowerCase(),
+          label: item,
         };
       });
     }
@@ -149,9 +172,7 @@ export const Popup = ({ item, action, closePopup }) => {
       },
       url: {
         placeholder: addItem ? "Movie URL here" : undefined,
-        value: editItem
-          ? `https://image.tmdb.org/t/p/w500${itemDetail.poster_path}`
-          : undefined,
+        value: editItem ? itemDetail.poster_path : undefined,
       },
       genre: {
         value: genreOptions,
@@ -371,3 +392,18 @@ export const Popup = ({ item, action, closePopup }) => {
     </div>
   );
 };
+
+const mapStateToProps = (props) => {
+  return {
+    props,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({ createMovie, editMovie, deleteMovie }, dispatch);
+};
+
+export default compose(
+  withMoviestoreService(),
+  connect(mapStateToProps, mapDispatchToProps)
+)(Popup);

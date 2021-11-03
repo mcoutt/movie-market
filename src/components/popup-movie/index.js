@@ -1,1 +1,3 @@
-export * from "./popup-movie";
+import Popup from "./popup-movie";
+
+export default Popup;

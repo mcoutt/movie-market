@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import propTypes from "prop-types";
-import { Popup } from "../popup-movie";
+import Popup from "../popup-movie";
 
 import "./movie-item.scss";
 import "../popup-movie/popup-movie.scss";
@@ -10,13 +10,15 @@ import { compose } from "../../utils";
 import { withMoviestoreService } from "../hoc";
 import { connect } from "react-redux";
 
-const imageUrl = (img) => `https://image.tmdb.org/t/p/w500${img}`;
-
 const MovieItem = (props) => {
   const [showEditPopup, setShowEditPopup] = useState(false);
-  const [showDelPopup, setShowDelPopup] = useState(false);
+  const [showDelPopup, setShowDelPopup] = useState(undefined);
 
   const { item } = props;
+
+  useEffect(() => {}, [showDelPopup]);
+  console.log("@@@@@");
+  console.log(showDelPopup);
 
   const getMovie = async () => {
     const { moviestoreService } = props;
@@ -58,75 +60,36 @@ const MovieItem = (props) => {
   //   dropdown.classList.toggle('active');
   // });
 
-  if (item.budget) {
-    return (
-      <div className="col">
-        <img
-          src={imageUrl(item.poster_path)}
-          onClick={handleShowDetail}
-          className="film"
-          alt={item.title}
-        />
-        <h5 onClick={handleEditOpen}>{item.title}</h5>
-        <span>{item.overview}</span>
-        <p>Vote average: {item.vote_average}</p>
-        <p>Vote count: {item.vote_count}</p>
-        <p>Release date: {item.release_date}</p>
-        <p>Budget: {item.budget}</p>
-        <p>Revenue: {item.revenue}</p>
-        <p>Runtime: {item.runtime}</p>
-        <p>Genres: {item.genres.map((item) => item.name)}</p>
+  return (
+    <div className="item-box">
+      <img src={item.poster_path} onClick={handleShowDetail} alt={item.title} />
+      <div className="card-box">
+        {item.title}
+        Release date: {item.release_date}
       </div>
-    );
-  } else {
-    return (
-      <div className="card">
-        <img
-          src={imageUrl(item.poster_path)}
-          onClick={handleShowDetail}
-          className="card-img-top img"
-          alt={item.title}
-        />
-        <div className="card-body">
-          <h5 className="card-title">{item.title}</h5>
-          <p className="card-text">{item.overview}</p>
-          <p className="card-text">Release date: {item.release_date}</p>
-          <p className="card-text">Vote average: {item.vote_average}</p>
-          <p className="card-text">Vote count: {item.vote_count}</p>
-        </div>
-        <button type="button" className="edit" onClick={handleEditOpen}>
-          EDIT MOVIE
-        </button>
-        <button type="button" className="del" onClick={handleDelOpen}>
-          DEL MOVIE
-        </button>
-        {showEditPopup ? (
-          <Popup
-            item={props.movie}
-            action="edit"
-            closePopup={handleEditClose}
-          />
-        ) : null}
-        {showDelPopup ? (
-          <Popup item={props.movie} action="del" closePopup={handleDelClose} />
-        ) : null}
-      </div>
-    );
-  }
+      <div>{item.genres.join(", ")}</div>
+      <button type="button" className="btn" onClick={handleEditOpen}>
+        EDIT MOVIE
+      </button>
+      <button type="button" className="btn" onClick={handleDelOpen}>
+        DEL MOVIE
+      </button>
+      {showEditPopup ? (
+        <Popup item={props.movie} action="edit" closePopup={handleEditClose} />
+      ) : undefined}
+      {showDelPopup ? (
+        <Popup item={props.movie} action="del" closePopup={handleDelClose} />
+      ) : undefined}
+    </div>
+  );
 };
 
 MovieItem.propTypes = {
   item: propTypes.shape({
     id: propTypes.number,
     title: propTypes.string,
-    overview: propTypes.string,
     poster_path: propTypes.string,
-    vote_average: propTypes.number,
-    vote_count: propTypes.number,
     release_date: propTypes.string,
-    budget: propTypes.number,
-    revenue: propTypes.number,
-    runtime: propTypes.number,
     genres: propTypes.array,
   }),
 };

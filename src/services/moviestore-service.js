@@ -1,21 +1,17 @@
 import axios from "axios";
 
-const results = (response) => {
-  if (response.status === 200) {
-    return response.data.results;
-  } else {
-    throw Error("Error with get movies");
-  }
-};
+const imageUrl = (img) => `https://image.tmdb.org/t/p/w500${img}`;
 
-export default class MoviestoreService {
+export class MoviestoreServiceAPI {
   getMovies = async () => {
     const link =
       "https://api.themoviedb.org/3/discover/movie?api_key=2bdb59a54b1d6faa2fafdda27487d12e";
     const response = await axios.get(link);
 
     if (response.status === 200) {
-      return response.data.results;
+      return response.data.results.map((i) => {
+        i.poster_path = imageUrl(i.poster_path);
+      });
     } else {
       throw Error("Error with get movies");
     }
@@ -27,7 +23,7 @@ export default class MoviestoreService {
     );
 
     if (response.status === 200) {
-      return response.data;
+      return (response.data.poster_path = imageUrl(response.data.poster_path));
     } else {
       throw Error("Error with get movies");
     }

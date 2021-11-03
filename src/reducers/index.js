@@ -18,13 +18,23 @@ const reducer = (state = initialState, action) => {
         ...state,
         header: action.payload,
       };
-
     case "GET_MOVIE_DETAILS":
       return {
         ...state,
       };
-    case "DEL_MOVIE_DETAILS":
+    case "CREATE_MOVIE":
       return {
+        ...state,
+        movie: action.payload,
+      };
+    case "EDIT_MOVIE":
+      return {
+        ...state,
+        movie: action.payload,
+      };
+    case "DEL_MOVIE":
+      return {
+        ...state,
         movies: action.payload,
       };
     default:

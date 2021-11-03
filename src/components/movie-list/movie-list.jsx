@@ -5,6 +5,8 @@ import { withMoviestoreService } from "../hoc";
 import { moviesLoaded } from "../../actions";
 import { bindActionCreators } from "redux";
 
+import "./movie-list.scss";
+
 const MovieList = (props) => {
   useEffect(async () => {
     const { moviestoreService } = props;
@@ -14,12 +16,10 @@ const MovieList = (props) => {
   }, []);
 
   return (
-    <div className="container">
-      <div className="row row-cols-1 row-cols-md-2 g-4">
-        {props.movies.length > 0
-          ? props.movies.map((item) => <MovieItem item={item} key={item.id} />)
-          : null}
-      </div>
+    <div className="movie-list">
+      {props.movies.length > 0
+        ? props.movies.map((item) => <MovieItem item={item} key={item.id} />)
+        : null}
     </div>
   );
 };

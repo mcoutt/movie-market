@@ -3,3 +3,14 @@
   height: 486px;
   width: 324px;
 }
+
+.item-box {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 27%;
+}
+
+.card-box {
+  display: flex;
+  justify-content: space-between;
+}
