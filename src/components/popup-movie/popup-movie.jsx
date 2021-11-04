@@ -5,7 +5,7 @@ import { compose } from "../../utils";
 import { withMoviestoreService } from "../hoc";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { createMovie, editMovie, deleteMovie } from "../../actions";
+import {createMovie, editMovie, deleteMovie, setMovieDetails} from "../../actions";
 
 const Option = (props) => {
   return (
@@ -23,14 +23,23 @@ const Option = (props) => {
 };
 
 const Popup = (props) => {
-  const { action, closePopup } = props;
-  const item = props.movie;
-  const itemDetail = props.movie;
-  console.log(
+  const { action, closePopup, item, moviestoreService } = props;
+
+  /*console.log(
     `!!@@@====== item: ${item} action: ${action} closePopup: ${closePopup} props: ${JSON.stringify(
       props
     )}`
-  );
+  );*/
+
+  useEffect(async () => {
+    if (action === "edit") {
+      const data = await moviestoreService.getMovie(item.id);
+      console.log(data);
+
+      props.setMovieDetails(data);
+    }
+  }, [action]);
+
   const movie = {
     title: "",
     overview: "",
@@ -107,10 +116,11 @@ const Popup = (props) => {
     event.preventDefault();
     props.deleteMovie(item.id);
     // setDeleteItem(itemDetail.id);
+    moviestoreService.getMovie(item.id);
   };
 
   useEffect(async () => {
-    await props.createMovie(movieItem);
+    //await props.createMovie(movieItem);
     // await props.deleteMovie(deleteItem);
   }, [createItem]);
 
@@ -162,25 +172,25 @@ const Popup = (props) => {
   }
   if (["add", "edit"].includes(action)) {
     if (editItem) {
-      genreOptions = itemDetail.genres.map((item) => {
+      genreOptions = item.genres.map((genre) => {
         return {
-          value: item.toLowerCase(),
-          label: item,
+          value: genre.toLowerCase(),
+          label: genre,
         };
       });
     }
     bodyItem = {
       title: {
         placeholder: addItem ? "Title there" : undefined,
-        value: editItem ? itemDetail.title : undefined,
+        value: editItem ? item.title : undefined,
       },
       releaseDate: {
         placeholder: addItem ? "Release date there" : undefined,
-        value: editItem ? itemDetail.release_date : undefined,
+        value: editItem ? item.release_date : undefined,
       },
       url: {
         placeholder: addItem ? "Movie URL here" : undefined,
-        value: editItem ? itemDetail.poster_path : undefined,
+        value: editItem ? item.poster_path : undefined,
       },
       genre: {
         value: genreOptions,
@@ -189,27 +199,27 @@ const Popup = (props) => {
       },
       overview: {
         placeholder: addItem ? "Overview there" : undefined,
-        value: editItem ? itemDetail.overview : undefined,
+        value: editItem ? item.overview : undefined,
       },
       vote_average: {
         placeholder: addItem ? "Vote rating there" : undefined,
-        value: editItem ? itemDetail.vote_average : undefined,
+        value: editItem ? item.vote_average : undefined,
       },
       vote_count: {
         placeholder: addItem ? "Vote count there" : undefined,
-        value: editItem ? itemDetail.vote_count : undefined,
+        value: editItem ? item.vote_count : undefined,
       },
       budget: {
         placeholder: addItem ? "Budget there" : undefined,
-        value: editItem ? itemDetail.budget : undefined,
+        value: editItem ? item.budget : undefined,
       },
       revenue: {
         placeholder: addItem ? "Revenue there" : undefined,
-        value: editItem ? itemDetail.revenue : undefined,
+        value: editItem ? item.revenue : undefined,
       },
       runtime: {
         placeholder: addItem ? "Runtime there" : undefined,
-        value: editItem ? itemDetail.runtime : undefined,
+        value: editItem ? item.runtime : undefined,
       },
 
       reset: false,
@@ -409,7 +419,7 @@ const mapStateToProps = ({ movies, movie }) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ createMovie, editMovie, deleteMovie }, dispatch);
+  return bindActionCreators({ createMovie, editMovie, deleteMovie, setMovieDetails }, dispatch);
 };
 
 export default compose(
