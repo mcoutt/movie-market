@@ -11,39 +11,18 @@ import { withMoviestoreService } from "../hoc";
 import { connect } from "react-redux";
 
 const MovieItem = (props) => {
-  const [showEditPopup, setShowEditPopup] = useState(false);
-  const [showDelPopup, setShowDelPopup] = useState(undefined);
   const [isEdit, setIsEdit] = useState(false);
 
-  const { item } = props;
+  const { item, openEditPopup, openDeletePopup } = props;
 
-  useEffect(async () => {
-    if (isEdit) {
-      const { moviestoreService } = props;
-      const data = await moviestoreService.getMovie(item.id);
+ //useEffect(async () => {
+ //  if (isEdit) {
+ //    const { moviestoreService } = props;
+ //    const data = await moviestoreService.getMovie(item.id);
 
-      props.setMovieDetails(data);
-    }
-  }, [isEdit]);
-
-  const handleEditOpen = () => {
-    setIsEdit(true);
-    setShowEditPopup(true);
-    props.setMovieDetails(item);
-  };
-
-  const handleEditClose = () => {
-    setShowEditPopup(false);
-  };
-
-  const handleDelOpen = (e) => {
-    setShowDelPopup(true);
-    props.setMovieDetails(item);
-  };
-
-  const handleDelClose = () => {
-    setShowDelPopup(false);
-  };
+ //    props.setMovieDetails(data);
+ //  }
+ //}, [isEdit]);
 
   const handleShowDetail = () => {
     props.setHeaderMovie(true);
@@ -69,18 +48,12 @@ const MovieItem = (props) => {
         Release date: {item.release_date}
       </div>
       <div>{item.genres.join(", ")}</div>
-      <button type="button" className="btn" onClick={handleEditOpen}>
+      <button type="button" className="btn" onClick={() => openEditPopup(item)}>
         EDIT MOVIE
       </button>
-      <button type="button" className="btn" onClick={handleDelOpen}>
+      <button type="button" className="btn" onClick={() => openDeletePopup(item)}>
         DEL MOVIE
       </button>
-      {showEditPopup ? (
-        <Popup item={props.movie} action="edit" closePopup={handleEditClose} />
-      ) : undefined}
-      {showDelPopup ? (
-        <Popup item={props.movie} action="del" closePopup={handleDelClose} />
-      ) : undefined}
     </div>
   );
 };
