@@ -5,7 +5,7 @@ import Popup from "../popup-movie";
 import "./movie-item.scss";
 import "../popup-movie/popup-movie.scss";
 import { bindActionCreators } from "redux";
-import { setMovieDetails, setHeaderMovie } from "../../actions";
+import { setMovieDetails, setHeaderMovie, deleteMovie } from "../../actions";
 import { compose } from "../../utils";
 import { withMoviestoreService } from "../hoc";
 import { connect } from "react-redux";
@@ -36,8 +36,9 @@ const MovieItem = (props) => {
     setShowEditPopup(false);
   };
 
-  const handleDelOpen = () => {
+  const handleDelOpen = (e) => {
     setShowDelPopup(true);
+    props.setMovieDetails(item);
   };
 
   const handleDelClose = () => {
@@ -105,6 +106,7 @@ const mapDispatchToProps = (dispatch) => {
     {
       setMovieDetails,
       setHeaderMovie,
+      deleteMovie,
     },
     dispatch
   );

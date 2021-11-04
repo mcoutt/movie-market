@@ -23,15 +23,13 @@ const Option = (props) => {
 };
 
 const Popup = (props) => {
-  const { action, closePopup } = props;
+  const { movie, action, closePopup } = props;
   const item = props.movie;
   const itemDetail = props.movie;
   console.log(
-    `!!@@@====== item: ${item} action: ${action} closePopup: ${closePopup} props: ${JSON.stringify(
-      props
-    )}`
+    `!!@@@====== item: ${props.movie} action: ${action}` // ::: props: ${JSON.stringify(props)}`
   );
-  const movie = {
+  const newMovie = {
     title: "",
     overview: "",
     poster_path: "",
@@ -50,7 +48,7 @@ const Popup = (props) => {
   const [overview, setOverview] = useState("");
   const [genres, setGenres] = useState([]);
   const [createItem, setCreateItem] = useState({});
-  const [movieItem, setMovieItem] = useState(movie);
+  const [movieItem, setMovieItem] = useState(newMovie);
   const [deleteItem, setDeleteItem] = useState("");
 
   const handleTitle = (event) => {
@@ -97,20 +95,19 @@ const Popup = (props) => {
       genres,
       action,
     };
-    console.log(movie);
-    const { name, value } = event.target;
-    // setMovieItem({ ...movieItem, movie });
-
-    setCreateItem(newMovie);
+    setCreateItem({ ...movieItem, movie });
+    // setCreateItem(newMovie);
+    props.createMovie(createItem);
+    console.log(`======= handle create ${JSON.stringify(createItem)}`);
   };
   const handleDelSubmit = (event) => {
     event.preventDefault();
     props.deleteMovie(item.id);
+
     // setDeleteItem(itemDetail.id);
   };
 
   useEffect(async () => {
-    await props.createMovie(movieItem);
     // await props.deleteMovie(deleteItem);
   }, [createItem]);
 
