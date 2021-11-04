@@ -5,7 +5,12 @@ import { compose } from "../../utils";
 import { withMoviestoreService } from "../hoc";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import {createMovie, editMovie, deleteMovie, setMovieDetails} from "../../actions";
+import {
+  createMovie,
+  editMovie,
+  deleteMovie,
+  setMovieDetails,
+} from "../../actions";
 
 const Option = (props) => {
   return (
@@ -24,27 +29,6 @@ const Option = (props) => {
 
 const Popup = (props) => {
   const { action, closePopup, item, moviestoreService } = props;
-  const deleteMovie = async () => {
-    const { moviestoreService } = props;
-    // const data = await moviestoreService.getMovie(item.id);
-    await moviestoreService.deleteMovie(item.id);
-    // props.deleteMovie(props.delMovie);
-  };
-  const itemDetail = props.movie;
-  /*console.log(
-    `!!@@@====== item: ${item} action: ${action} closePopup: ${closePopup} props: ${JSON.stringify(
-      props
-    )}`
-  );*/
-
-  useEffect(async () => {
-    if (action === "edit") {
-      const data = await moviestoreService.getMovie(item.id);
-      console.log(data);
-
-      props.setMovieDetails(data);
-    }
-  }, [action]);
 
   const movie = {
     title: "",
@@ -66,7 +50,32 @@ const Popup = (props) => {
   const [genres, setGenres] = useState([]);
   const [createItem, setCreateItem] = useState({});
   const [movieItem, setMovieItem] = useState(movie);
-  const [deleteItem, setDeleteItem] = useState("");
+  const [deleteItem, setDeleteItem] = useState(false);
+
+  const deleteMovie = async () => {
+    await moviestoreService.deleteMovie(item.id);
+    // props.deleteMovie(props.delMovie);
+  };
+  const itemDetail = props.movie;
+  /*console.log(
+    `!!@@@====== item: ${item} action: ${action} closePopup: ${closePopup} props: ${JSON.stringify(
+      props
+    )}`
+  );*/
+
+  useEffect(async () => {
+    if (deleteItem) {
+      await closePopup();
+      //   await moviestoreService.getMovie(item.id);
+    }
+
+    if (action === "edit") {
+      const data = await moviestoreService.getMovie(item.id);
+      console.log(data);
+
+      props.setMovieDetails(data);
+    }
+  }, [action, deleteItem]);
 
   const handleTitle = (event) => {
     setTitle(event.target.value);
@@ -119,16 +128,11 @@ const Popup = (props) => {
   };
   const handleDelSubmit = async (event) => {
     event.preventDefault();
-    // props.deleteMovie(item.id);
+    props.deleteMovie(item.id);
     await deleteMovie();
-    // setDeleteItem(itemDetail.id);
-    moviestoreService.getMovie(item.id);
+    // await moviestoreService.getMovie(item.id);
+    await setDeleteItem(true);
   };
-
-  useEffect(async () => {
-    //await props.createMovie(movieItem);
-    // await props.deleteMovie(deleteItem);
-  }, [createItem]);
 
   const header =
     action === "add"
@@ -426,7 +430,10 @@ const mapStateToProps = ({ movies, movie, delMovie }) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ createMovie, editMovie, deleteMovie, setMovieDetails }, dispatch);
+  return bindActionCreators(
+    { createMovie, editMovie, deleteMovie, setMovieDetails },
+    dispatch
+  );
 };
 
 export default compose(

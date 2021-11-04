@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import MovieItem from "../movie-item";
 import { connect } from "react-redux";
 import { withMoviestoreService } from "../hoc";
@@ -13,11 +13,13 @@ const MovieList = (props) => {
   const [movieToDelete, setMovieToDelete] = useState(null);
 
   useEffect(async () => {
-    const { moviestoreService } = props;
-    const data = await moviestoreService.getMovies();
+    if (!movieToDelete) {
+      const { moviestoreService } = props;
+      const data = await moviestoreService.getMovies();
 
-    props.moviesLoaded(data);
-  }, []);
+      props.moviesLoaded(data);
+    }
+  }, [movieToDelete]);
 
   const handleEditOpen = (movie) => {
     setMovieToEdit(movie);
@@ -39,8 +41,14 @@ const MovieList = (props) => {
     <>
       <div className="movie-list">
         {props.movies.length > 0
-          ? props.movies.map((item) =>
-            <MovieItem item={item} key={item.id} openEditPopup={handleEditOpen} openDeletePopup={handleDelOpen} />)
+          ? props.movies.map((item) => (
+              <MovieItem
+                item={item}
+                key={item.id}
+                openEditPopup={handleEditOpen}
+                openDeletePopup={handleDelOpen}
+              />
+            ))
           : null}
       </div>
       {movieToEdit ? (

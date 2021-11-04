@@ -75,7 +75,6 @@ export class MoviestoreServiceLocal {
 
   deleteMovie = async (id) => {
     const response = await axios.delete(`http://localhost:4000/movies/${id}`);
-    console.log(`--- del movie --- ${JSON.stringify(response)}`);
     if (response.status === 204) {
       return true;
     } else {
