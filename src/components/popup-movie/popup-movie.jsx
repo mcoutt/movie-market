@@ -24,10 +24,18 @@ const Option = (props) => {
 
 const Popup = (props) => {
   const { movie, action, closePopup } = props;
+  const deleteMovie = async () => {
+    const { moviestoreService } = props;
+    // const data = await moviestoreService.getMovie(item.id);
+    await moviestoreService.deleteMovie(item.id);
+    // props.deleteMovie(props.delMovie);
+  };
   const item = props.movie;
   const itemDetail = props.movie;
   console.log(
-    `!!@@@====== item: ${props.movie} action: ${action}` // ::: props: ${JSON.stringify(props)}`
+    `!!@@@====== item: ${
+      props.movie
+    } action: ${action} ::: props: ${JSON.stringify(props)}`
   );
   const newMovie = {
     title: "",
@@ -95,15 +103,15 @@ const Popup = (props) => {
       genres,
       action,
     };
-    setCreateItem({ ...movieItem, movie });
+    // setCreateItem({ ...movieItem, movie });
     // setCreateItem(newMovie);
-    props.createMovie(createItem);
+    props.createMovie(newMovie);
     console.log(`======= handle create ${JSON.stringify(createItem)}`);
   };
-  const handleDelSubmit = (event) => {
+  const handleDelSubmit = async (event) => {
     event.preventDefault();
-    props.deleteMovie(item.id);
-
+    // props.deleteMovie(item.id);
+    await deleteMovie();
     // setDeleteItem(itemDetail.id);
   };
 
@@ -398,10 +406,11 @@ const Popup = (props) => {
   );
 };
 
-const mapStateToProps = ({ movies, movie }) => {
+const mapStateToProps = ({ movies, movie, delMovie }) => {
   return {
     movies,
     movie,
+    delMovie,
   };
 };
 
