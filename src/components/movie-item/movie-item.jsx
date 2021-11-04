@@ -13,23 +13,23 @@ import { connect } from "react-redux";
 const MovieItem = (props) => {
   const [showEditPopup, setShowEditPopup] = useState(false);
   const [showDelPopup, setShowDelPopup] = useState(undefined);
+  const [isEdit, setIsEdit] = useState(false);
 
   const { item } = props;
 
-  useEffect(() => {}, [showDelPopup]);
-  console.log("@@@@@");
-  console.log(showDelPopup);
+  useEffect(async () => {
+    if (isEdit) {
+      const { moviestoreService } = props;
+      const data = await moviestoreService.getMovie(item.id);
 
-  const getMovie = async () => {
-    const { moviestoreService } = props;
-    const data = await moviestoreService.getMovie(item.id);
+      props.setMovieDetails(data);
+    }
+  }, [isEdit]);
 
-    props.setMovieDetails(data);
-  };
-
-  const handleEditOpen = async () => {
-    await getMovie();
-    await setShowEditPopup(true);
+  const handleEditOpen = () => {
+    setIsEdit(true);
+    setShowEditPopup(true);
+    props.setMovieDetails(item);
   };
 
   const handleEditClose = () => {
@@ -44,9 +44,9 @@ const MovieItem = (props) => {
     setShowDelPopup(false);
   };
 
-  const handleShowDetail = async () => {
-    await getMovie();
+  const handleShowDetail = () => {
     props.setHeaderMovie(true);
+    props.setMovieDetails(item);
   };
 
   // const kebab = document.querySelector('.kebab'),
@@ -97,7 +97,6 @@ MovieItem.propTypes = {
 const mapStateToProps = ({ movies, movie }) => {
   return {
     movies,
-    movie,
   };
 };
 

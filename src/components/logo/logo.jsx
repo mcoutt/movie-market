@@ -3,13 +3,13 @@ import Popup from "../popup-movie";
 
 import "./logo.scss";
 import { bindActionCreators } from "redux";
-import { deleteMovie, getMovieDetails } from "../../actions";
+import { setHeaderMovie, setMovieDetails } from "../../actions";
 import { withMoviestoreService } from "../hoc";
 import { connect } from "react-redux";
 
 const Logo = (props) => {
   const [showPopup, setShowPopup] = useState(false);
-  const { movie, showSearch, movies } = props;
+  const { movie, showSearch } = props;
   const handleOpen = () => {
     setShowPopup(true);
   };
@@ -19,7 +19,7 @@ const Logo = (props) => {
   };
 
   const handleSearch = () => {
-    props.deleteMovie(movies);
+    props.setHeaderMovie(false);
   };
 
   let renderButton;
@@ -67,7 +67,7 @@ const mapStateToProps = ({ movie, movies }) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ getMovieDetails, deleteMovie }, dispatch);
+  return bindActionCreators({ setMovieDetails, setHeaderMovie }, dispatch);
 };
 
 export default withMoviestoreService()(

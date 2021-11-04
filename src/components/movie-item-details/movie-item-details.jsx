@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import "./movie-item-details.scss";
 
 const MovieItemDetails = (props) => {
-  const { item } = props;
+  const item = props.movie;
 
   const getMovie = async () => {
     const { moviestoreService } = props;

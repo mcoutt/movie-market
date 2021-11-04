@@ -25,7 +25,7 @@ const reducer = (state = initialState, action) => {
     case "CREATE_MOVIE":
       return {
         ...state,
-        movie: action.payload,
+        newMovie: action.payload,
       };
     case "EDIT_MOVIE":
       return {
@@ -35,7 +35,7 @@ const reducer = (state = initialState, action) => {
     case "DEL_MOVIE":
       return {
         ...state,
-        movies: action.payload,
+        delMovie: action.payload,
       };
     default:
       return state;

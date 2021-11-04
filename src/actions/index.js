@@ -12,10 +12,10 @@ const setMovieDetails = (movie) => {
   };
 };
 
-const setHeaderMovie = (edit) => {
+const setHeaderMovie = (itemHeader) => {
   return {
     type: "SET_HEADER_MOVIE",
-    payload: edit,
+    payload: itemHeader,
   };
 };
 
@@ -26,10 +26,10 @@ const getMovieDetails = (movie) => {
   };
 };
 
-const createMovie = (movie) => {
+const createMovie = (newMovie) => {
   return {
     type: "CREATE_MOVIE",
-    payload: movie,
+    payload: newMovie,
   };
 };
 

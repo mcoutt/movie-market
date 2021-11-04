@@ -10,8 +10,6 @@ const results = (response) => {
 
 export class MoviestoreServiceLocal {
   getMovies = async (queryParams = undefined) => {
-    console.log("*******");
-    console.log(JSON.stringify(queryParams));
     const limit =
       queryParams && queryParams.limit ? queryParams.limit : undefined;
     const filter =
@@ -33,8 +31,8 @@ export class MoviestoreServiceLocal {
       ? `http://localhost:4000/movies?sortBy=${sort}&sortOrder=desc`
       : "http://localhost:4000/movies";
     const response = await axios.get(query);
-    console.log(query);
-    console.log(response.data.data);
+    // console.log(query);
+    // console.log(response.data.data);
     return results(response);
   };
 
@@ -49,11 +47,12 @@ export class MoviestoreServiceLocal {
   };
 
   createMovie = async (movie) => {
+    console.log(`--- create movie --- ${movie}`);
     const response = await axios.post({
       baseURL: `http://localhost:4000/movies/`,
       movie,
     });
-    console.log(response);
+    console.log(`--- create movie --- ${response}`);
     if (response.status === 200) {
       return response.data;
     } else {
@@ -76,7 +75,7 @@ export class MoviestoreServiceLocal {
 
   deleteMovie = async (id) => {
     const response = await axios.delete(`http://localhost:4000/movies/${id}`);
-    console.log(response);
+    console.log(`--- del movie --- ${response}`);
     if (response.status === 200) {
       return response.data;
     } else {
