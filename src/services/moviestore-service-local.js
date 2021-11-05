@@ -31,8 +31,6 @@ export class MoviestoreServiceLocal {
       ? `http://localhost:4000/movies?sortBy=${sort}&sortOrder=desc`
       : "http://localhost:4000/movies";
     const response = await axios.get(query);
-    // console.log(query);
-    // console.log(response.data.data);
     return results(response);
   };
 
@@ -47,7 +45,6 @@ export class MoviestoreServiceLocal {
   };
 
   createMovie = async (newMovie) => {
-    console.log(`--- create movie --- ${JSON.stringify(newMovie)}`);
     try {
       const response = await axios.post(
         "http://localhost:4000/movies",
@@ -56,18 +53,11 @@ export class MoviestoreServiceLocal {
     } catch (e) {
       console.log(`--- create movie eee --- ${e}`);
     }
-    // if (response.status === 200) {
-    //   return response.data;
-    // } else {
-    //   throw Error("Error with get movies");
-    // };
   };
 
-  editMovie = async (movie) => {
-    const response = await axios.post({
-      baseURL: `http://localhost:4000/movies/`,
-      movie,
-    });
+  editMovie = async ({ id, movie }) => {
+    movie.id = id;
+    const response = await axios.put(`http://localhost:4000/movies/`, movie);
     console.log(response);
     if (response.status === 200) {
       return response.data;

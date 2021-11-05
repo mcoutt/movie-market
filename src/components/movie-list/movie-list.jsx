@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import MovieItem from "../movie-item";
 import { connect } from "react-redux";
 import { withMoviestoreService } from "../hoc";
-import { createMovie, moviesLoaded } from "../../actions";
+import { moviesLoaded } from "../../actions";
 import { bindActionCreators } from "redux";
 
 import "./movie-list.scss";

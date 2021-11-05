@@ -41,14 +41,39 @@ const Popup = (props) => {
     action: "",
   };
 
-  const [title, setTitle] = useState("");
-  const [releaseDate, setReleaseDate] = useState("");
-  const [url, setUrl] = useState("");
-  const [rating, setRating] = useState("");
-  const [runtime, setRuntime] = useState("");
-  const [overview, setOverview] = useState("");
-  const [genres, setGenres] = useState([]);
+  let body;
+  let bodyItem;
+  let addItem = undefined;
+  let editItem = undefined;
+  let delItem = undefined;
+  let genreOptions = [];
+
+  if (action === "add") {
+    addItem = true;
+  } else if (action === "edit") {
+    editItem = true;
+  } else if (action === "del") {
+    delItem = true;
+  }
+
+  if (editItem) {
+    genreOptions = item.genres.map((genre) => {
+      return {
+        value: genre.toLowerCase(),
+        label: genre,
+      };
+    });
+  }
+
+  const [title, setTitle] = useState(item.title);
+  const [releaseDate, setReleaseDate] = useState(item.release_date);
+  const [url, setUrl] = useState(item.poster_path);
+  const [rating, setRating] = useState(item.revenue);
+  const [runtime, setRuntime] = useState(item.runtime);
+  const [overview, setOverview] = useState(item.overview);
+  const [genres, setGenres] = useState(genreOptions);
   const [createItem, setCreateItem] = useState(undefined);
+  const [editMovieItem, setEditMovieItem] = useState(undefined);
 
   useEffect(async () => {
     if (action === "edit") {
@@ -57,9 +82,10 @@ const Popup = (props) => {
 
       props.setMovieDetails(data);
     }
-  }, [action, createItem]);
+  }, [action, createItem, editMovieItem]);
 
   const handleTitle = (event) => {
+    console.log(`change ---- ${event.target.value}`);
     setTitle(event.target.value);
   };
 
@@ -93,22 +119,34 @@ const Popup = (props) => {
 
   const handleSubmit = async (event) => {
     await event.preventDefault();
-    const newMovie = {
-      title,
-      overview,
-      poster_path: url,
-      release_date: releaseDate,
-      revenue: parseInt(rating),
-      runtime: parseInt(runtime),
-      genres: genres.split(" "),
-    };
-    // setCreateItem({ ...movieItem, movie });
-    await moviestoreService.createMovie(newMovie);
-    // await setCreateItem(newMovie);
-    props.createMovie(newMovie);
-    // console.log(`======= handle newMovie ${JSON.stringify(newMovie)}`);
-    // console.log(`======= handle createItem ${JSON.stringify(createItem)}`);
-
+    if (action === "add") {
+      const newMovie = {
+        title,
+        overview,
+        poster_path: url,
+        release_date: releaseDate,
+        revenue: typeof rating === "string" ? parseInt(rating) : rating,
+        runtime: typeof runtime === "string" ? parseInt(runtime) : runtime,
+        genres: genres.split(" "),
+      };
+      // setCreateItem({ ...movieItem, movie });
+      await moviestoreService.createMovie(newMovie);
+      // await setCreateItem(newMovie);
+      props.createMovie(newMovie);
+    } else if (action === "edit") {
+      let updatedMovie = {
+        id: item.id,
+        title,
+        overview,
+        poster_path: url,
+        release_date: releaseDate,
+        revenue: typeof rating === "string" ? parseInt(rating) : rating,
+        runtime: typeof runtime === "string" ? parseInt(runtime) : runtime,
+        genres: genres.map((i) => i.label),
+      };
+      await moviestoreService.editMovie({ id: item.id, movie: updatedMovie });
+      props.editMovie(updatedMovie);
+    }
     await closePopup();
   };
   const handleDelSubmit = async (event) => {
@@ -150,41 +188,19 @@ const Popup = (props) => {
     },
   };
 
-  let body;
-  let bodyItem;
-  let addItem = undefined;
-  let editItem = undefined;
-  let delItem = undefined;
-  let genreOptions = [];
-
-  if (action === "add") {
-    addItem = true;
-  } else if (action === "edit") {
-    editItem = true;
-  } else if (action === "del") {
-    delItem = true;
-  }
   if (["add", "edit"].includes(action)) {
-    if (editItem) {
-      genreOptions = item.genres.map((genre) => {
-        return {
-          value: genre.toLowerCase(),
-          label: genre,
-        };
-      });
-    }
     bodyItem = {
       title: {
         placeholder: addItem ? "Title there" : undefined,
-        value: editItem ? item.title : undefined,
+        value: editItem ? title : undefined,
       },
       releaseDate: {
         placeholder: addItem ? "Release date there" : undefined,
-        value: editItem ? item.release_date : undefined,
+        value: editItem ? releaseDate : undefined,
       },
       url: {
         placeholder: addItem ? "Movie URL here" : undefined,
-        value: editItem ? item.poster_path : undefined,
+        value: editItem ? url : undefined,
       },
       genre: {
         value: genreOptions,
@@ -193,7 +209,7 @@ const Popup = (props) => {
       },
       overview: {
         placeholder: addItem ? "Overview there" : undefined,
-        value: editItem ? item.overview : undefined,
+        value: editItem ? overview : undefined,
       },
       vote_average: {
         placeholder: addItem ? "Vote rating there" : undefined,
@@ -209,11 +225,11 @@ const Popup = (props) => {
       },
       revenue: {
         placeholder: addItem ? "Revenue there" : undefined,
-        value: editItem ? item.revenue : undefined,
+        value: editItem ? rating : undefined,
       },
       runtime: {
         placeholder: addItem ? "Runtime there" : undefined,
-        value: editItem ? item.runtime : undefined,
+        value: editItem ? runtime : undefined,
       },
 
       reset: false,
@@ -271,9 +287,9 @@ const Popup = (props) => {
                 type="text"
                 name="rating"
                 className={bodyItem.styles}
-                placeholder={bodyItem.vote_average.placeholder}
+                placeholder={bodyItem.revenue.placeholder}
                 onChange={handleRating}
-                value={bodyItem.vote_average.value}
+                value={bodyItem.revenue.value}
               />
             </label>
           </div>
