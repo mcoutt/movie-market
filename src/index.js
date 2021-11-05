@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import reportWebVitals from "./reportWebVitals";
 import ErrorBoundry from "./components/error-boundaries";
 import store from "./store";
-import MoviestoreService from "./services/moviestore-service";
+import MoviestoreService from "./services";
 import { MoviestoreServiceProvider } from "./components/moviestore-service-context";
 
 const moviestoreService = new MoviestoreService();

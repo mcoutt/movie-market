@@ -1,4 +1,4 @@
-export default class MoviestoreService {
+export class DummyMoviestoreService {
   async getMovies() {
     return [
       {
