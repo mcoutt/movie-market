@@ -9,7 +9,7 @@ const GenreFilter = (props) => {
   const { moviestoreService } = props;
 
   const [filter, setFilter] = useState("");
-  const [sort, setSort] = useState("");
+  const [sort, setSort] = useState("release_date");
 
   const sortMovie = (newSortItem) => {
     setSort(newSortItem);
@@ -38,11 +38,21 @@ const GenreFilter = (props) => {
   return (
     <div className="genre-wrapper">
       <div className="genres">
-        <p className="genre" onClick={handleAll}>All</p>
-        <p className="genre" onClick={handleDocumentary}>Documentary</p>
-        <p className="genre" onClick={handleComedy}>Comedy</p>
-        <p className="genre" onClick={handleHorror}>Horror</p>
-        <p className="genre" onClick={handleCrime}>Crime</p>
+        <p className="genre" onClick={handleAll}>
+          All
+        </p>
+        <p className="genre" onClick={handleDocumentary}>
+          Documentary
+        </p>
+        <p className="genre" onClick={handleComedy}>
+          Comedy
+        </p>
+        <p className="genre" onClick={handleHorror}>
+          Horror
+        </p>
+        <p className="genre" onClick={handleCrime}>
+          Crime
+        </p>
       </div>
       <p>
         SORT BY
