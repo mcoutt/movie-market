@@ -1,0 +1,16 @@
+.genre-wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+.genres {
+  display: flex;
+}
+
+.genre:not(:last-child) {
+  margin-right: 10px;
+}
+
+.sort {
+  margin-left: 10px;
+}

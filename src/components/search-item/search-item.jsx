@@ -28,7 +28,8 @@ const SearchItem = (props) => {
   };
 
   return (
-    <div>
+    <div className="search-form">
+      <h2 className="search-form-title">Find your movie</h2>
       <form>
         <input
           type="text"

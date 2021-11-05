@@ -7,7 +7,6 @@
 .searchInput {
   width: 40%;
   padding: 12px 2px;
-  margin-left: 350px;
   box-sizing: border-box;
   background-color: gray;
   border: none;
@@ -26,4 +25,13 @@
   color: white;
   margin-left: 1px;
   margin-top: 20px;
+}
+
+.search-form {
+  padding: 35px 120px 150px;
+}
+
+.search-form-title {
+  color: #d8d8d8;
+  text-transform: uppercase;
 }

@@ -3,6 +3,7 @@ import { bindActionCreators } from "redux";
 import { moviesLoaded } from "../../actions";
 import { withMoviestoreService } from "../hoc";
 import { connect } from "react-redux";
+import "./genre-filter.scss";
 
 const GenreFilter = (props) => {
   const { moviestoreService } = props;
@@ -35,15 +36,18 @@ const GenreFilter = (props) => {
   };
 
   return (
-    <div>
-      <p onClick={handleAll}>All</p>
-      <p onClick={handleDocumentary}>Documentary</p>
-      <p onClick={handleComedy}>Comedy</p>
-      <p onClick={handleHorror}>Horror</p>
-      <p onClick={handleCrime}>Crime</p>
+    <div className="genre-wrapper">
+      <div className="genres">
+        <p className="genre" onClick={handleAll}>All</p>
+        <p className="genre" onClick={handleDocumentary}>Documentary</p>
+        <p className="genre" onClick={handleComedy}>Comedy</p>
+        <p className="genre" onClick={handleHorror}>Horror</p>
+        <p className="genre" onClick={handleCrime}>Crime</p>
+      </div>
       <p>
         SORT BY
         <select
+          className="sort"
           onChange={(event) => sortMovie(event.target.value)}
           value={sort}
         >

@@ -30,7 +30,7 @@ const reducer = (state = initialState, action) => {
     case "EDIT_MOVIE":
       return {
         ...state,
-        movie: action.payload,
+        updatedMovie: action.payload,
       };
     case "DEL_MOVIE":
       return {

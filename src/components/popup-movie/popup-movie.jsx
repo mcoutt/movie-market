@@ -118,7 +118,7 @@ const Popup = (props) => {
   };
 
   const handleSubmit = async (event) => {
-    await event.preventDefault();
+    event.preventDefault();
     if (action === "add") {
       const newMovie = {
         title,
@@ -147,7 +147,7 @@ const Popup = (props) => {
       await moviestoreService.editMovie({ id: item.id, movie: updatedMovie });
       props.editMovie(updatedMovie);
     }
-    await closePopup();
+    closePopup();
   };
   const handleDelSubmit = async (event) => {
     event.preventDefault();

@@ -42,10 +42,10 @@ const MovieItem = (props) => {
 
   return (
     <div className="item-box">
-      <img src={item.poster_path} onClick={handleShowDetail} alt={item.title} />
+      <img className="poster" src={item.poster_path} onClick={handleShowDetail} alt={item.title} />
       <div className="card-box">
-        {item.title}
-        Release date: {item.release_date}
+        <div>{item.title}</div>
+        <div>Release date: {item.release_date}</div>
       </div>
       <div>{item.genres.join(", ")}</div>
       <button type="button" className="btn" onClick={() => openEditPopup(item)}>

@@ -9,15 +9,16 @@ import "./movie-list.scss";
 import Popup from "../popup-movie";
 
 const MovieList = (props) => {
+  const { moviestoreService } = props;
   const [movieToEdit, setMovieToEdit] = useState(null);
   const [movieToDelete, setMovieToDelete] = useState(null);
 
   useEffect(async () => {
-    const { moviestoreService } = props;
     const data = await moviestoreService.getMovies();
+    console.log(data);
 
     props.moviesLoaded(data);
-  }, [movieToDelete, props.newMovie]);
+  }, [movieToDelete, props.newMovie, props.updatedMovie]);
 
   const handleEditOpen = (movie) => {
     setMovieToEdit(movie);
@@ -59,10 +60,11 @@ const MovieList = (props) => {
   );
 };
 
-const mapStateToProps = ({ movies, newMovie }) => {
+const mapStateToProps = ({ movies, newMovie, updatedMovie }) => {
   return {
     movies,
     newMovie,
+    updatedMovie,
   };
 };
 
