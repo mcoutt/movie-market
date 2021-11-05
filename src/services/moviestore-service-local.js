@@ -46,18 +46,21 @@ export class MoviestoreServiceLocal {
     }
   };
 
-  createMovie = async (movie) => {
-    console.log(`--- create movie --- ${movie}`);
-    const response = await axios.post({
-      baseURL: `http://localhost:4000/movies/`,
-      movie,
-    });
-    console.log(`--- create movie --- ${response}`);
-    if (response.status === 200) {
-      return response.data;
-    } else {
-      throw Error("Error with get movies");
+  createMovie = async (newMovie) => {
+    console.log(`--- create movie --- ${JSON.stringify(newMovie)}`);
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/movies",
+        newMovie
+      );
+    } catch (e) {
+      console.log(`--- create movie eee --- ${e}`);
     }
+    // if (response.status === 200) {
+    //   return response.data;
+    // } else {
+    //   throw Error("Error with get movies");
+    // };
   };
 
   editMovie = async (movie) => {

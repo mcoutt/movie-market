@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import MovieItem from "../movie-item";
 import { connect } from "react-redux";
 import { withMoviestoreService } from "../hoc";
-import { moviesLoaded } from "../../actions";
+import { createMovie, moviesLoaded } from "../../actions";
 import { bindActionCreators } from "redux";
 
 import "./movie-list.scss";
@@ -13,13 +13,11 @@ const MovieList = (props) => {
   const [movieToDelete, setMovieToDelete] = useState(null);
 
   useEffect(async () => {
-    if (!movieToDelete) {
-      const { moviestoreService } = props;
-      const data = await moviestoreService.getMovies();
+    const { moviestoreService } = props;
+    const data = await moviestoreService.getMovies();
 
-      props.moviesLoaded(data);
-    }
-  }, [movieToDelete]);
+    props.moviesLoaded(data);
+  }, [movieToDelete, props.newMovie]);
 
   const handleEditOpen = (movie) => {
     setMovieToEdit(movie);
@@ -61,9 +59,10 @@ const MovieList = (props) => {
   );
 };
 
-const mapStateToProps = ({ movies }) => {
+const mapStateToProps = ({ movies, newMovie }) => {
   return {
     movies,
+    newMovie,
   };
 };
 

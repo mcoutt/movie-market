@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Popup from "../popup-movie";
 
 import "./logo.scss";
@@ -10,11 +10,14 @@ import { connect } from "react-redux";
 const Logo = (props) => {
   const [showPopup, setShowPopup] = useState(false);
   const { movie, showSearch } = props;
+
+  useEffect(() => {}, [showPopup]);
   const handleOpen = () => {
     setShowPopup(true);
   };
 
   const handleClose = () => {
+    console.log("######## close");
     setShowPopup(false);
   };
 

@@ -28,7 +28,7 @@ const Option = (props) => {
 };
 
 const Popup = (props) => {
-  const { action, closePopup, item, moviestoreService } = props;
+  const { action, closePopup, item, newMovie, moviestoreService } = props;
 
   const movie = {
     title: "",
@@ -48,34 +48,16 @@ const Popup = (props) => {
   const [runtime, setRuntime] = useState("");
   const [overview, setOverview] = useState("");
   const [genres, setGenres] = useState([]);
-  const [createItem, setCreateItem] = useState({});
-  const [movieItem, setMovieItem] = useState(movie);
-  const [deleteItem, setDeleteItem] = useState(false);
-
-  const deleteMovie = async () => {
-    await moviestoreService.deleteMovie(item.id);
-    // props.deleteMovie(props.delMovie);
-  };
-  const itemDetail = props.movie;
-  /*console.log(
-    `!!@@@====== item: ${item} action: ${action} closePopup: ${closePopup} props: ${JSON.stringify(
-      props
-    )}`
-  );*/
+  const [createItem, setCreateItem] = useState(undefined);
 
   useEffect(async () => {
-    if (deleteItem) {
-      await closePopup();
-      //   await moviestoreService.getMovie(item.id);
-    }
-
     if (action === "edit") {
       const data = await moviestoreService.getMovie(item.id);
       console.log(data);
 
       props.setMovieDetails(data);
     }
-  }, [action, deleteItem]);
+  }, [action, createItem]);
 
   const handleTitle = (event) => {
     setTitle(event.target.value);
@@ -109,29 +91,31 @@ const Popup = (props) => {
     event.preventDefault();
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = async (event) => {
+    await event.preventDefault();
     const newMovie = {
       title,
       overview,
       poster_path: url,
       release_date: releaseDate,
-      revenue: rating,
-      runtime,
-      genres,
-      action,
+      revenue: parseInt(rating),
+      runtime: parseInt(runtime),
+      genres: genres.split(" "),
     };
     // setCreateItem({ ...movieItem, movie });
-    // setCreateItem(newMovie);
+    await moviestoreService.createMovie(newMovie);
+    // await setCreateItem(newMovie);
     props.createMovie(newMovie);
-    console.log(`======= handle create ${JSON.stringify(createItem)}`);
+    // console.log(`======= handle newMovie ${JSON.stringify(newMovie)}`);
+    // console.log(`======= handle createItem ${JSON.stringify(createItem)}`);
+
+    await closePopup();
   };
   const handleDelSubmit = async (event) => {
     event.preventDefault();
+    await moviestoreService.deleteMovie(item.id);
     props.deleteMovie(item.id);
-    await deleteMovie();
-    // await moviestoreService.getMovie(item.id);
-    await setDeleteItem(true);
+    closePopup();
   };
 
   const header =
@@ -421,10 +405,11 @@ const Popup = (props) => {
   );
 };
 
-const mapStateToProps = ({ movies, movie, delMovie }) => {
+const mapStateToProps = ({ movies, movie, newMovie, delMovie }) => {
   return {
     movies,
     movie,
+    newMovie,
     delMovie,
   };
 };
