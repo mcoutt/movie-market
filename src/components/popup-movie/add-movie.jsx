@@ -48,7 +48,7 @@ const AddPopup = (props) => {
     title: Yup.string().required("Title is required"),
     release_date: Yup.string().required("Release date is required"),
     poster_path: Yup.string().required("Url to the poster image is required"),
-    genres: Yup.string().required("List of genres is required"),
+    genres: Yup.array().required("List of genres is required"),
     overview: Yup.string().required(
       "Short description of the movie is required"
     ),
