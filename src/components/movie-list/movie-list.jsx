@@ -6,7 +6,7 @@ import { moviesLoaded } from "../../actions";
 import { bindActionCreators } from "redux";
 
 import "./movie-list.scss";
-import Popup from "../popup-movie";
+import { EditPopup, DelPopup } from "../popup-movie";
 
 const MovieList = (props) => {
   const { moviestoreService } = props;
@@ -51,10 +51,10 @@ const MovieList = (props) => {
           : null}
       </div>
       {movieToEdit ? (
-        <Popup item={movieToEdit} action="edit" closePopup={handleEditClose} />
+        <EditPopup item={movieToEdit} closePopup={handleEditClose} />
       ) : undefined}
       {movieToDelete ? (
-        <Popup item={movieToDelete} action="del" closePopup={handleDelClose} />
+        <DelPopup item={movieToDelete} closePopup={handleDelClose} />
       ) : undefined}
     </>
   );

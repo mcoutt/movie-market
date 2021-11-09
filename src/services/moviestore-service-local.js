@@ -46,23 +46,22 @@ export class MoviestoreServiceLocal {
 
   createMovie = async (newMovie) => {
     try {
-      const response = await axios.post(
-        "http://localhost:4000/movies",
-        newMovie
-      );
+      await axios.post("http://localhost:4000/movies", newMovie);
     } catch (e) {
-      console.log(`--- create movie eee --- ${e}`);
+      throw Error(`Error with create movies: ${e}`);
     }
   };
 
   editMovie = async ({ id, movie }) => {
+    console.log(`------  service Movie - ${JSON.stringify(movie)}`);
+
     movie.id = id;
     const response = await axios.put(`http://localhost:4000/movies/`, movie);
     console.log(response);
     if (response.status === 200) {
       return response.data;
     } else {
-      throw Error("Error with get movies");
+      throw Error(`Error with get movies: ${response}`);
     }
   };
 
@@ -71,7 +70,7 @@ export class MoviestoreServiceLocal {
     if (response.status === 204) {
       return true;
     } else {
-      throw Error("Error with get movies");
+      throw Error(`Error with delete movies: ${response}`);
     }
   };
 }

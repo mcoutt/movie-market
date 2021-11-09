@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Popup from "../popup-movie";
+import { AddPopup } from "../popup-movie";
 
 import "./logo.scss";
 import { bindActionCreators } from "redux";
@@ -55,9 +55,7 @@ const Logo = (props) => {
         <span className="secondLogo">roulette</span>
         {renderButton}
       </div>
-      {showPopup ? (
-        <Popup item="" action="add" closePopup={handleClose} />
-      ) : null}
+      {showPopup ? <AddPopup closePopup={handleClose} /> : null}
     </div>
   );
 };

@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import propTypes from "prop-types";
-import Popup from "../popup-movie";
 
 import "./movie-item.scss";
 import "../popup-movie/popup-movie.scss";
@@ -11,18 +10,7 @@ import { withMoviestoreService } from "../hoc";
 import { connect } from "react-redux";
 
 const MovieItem = (props) => {
-  const [isEdit, setIsEdit] = useState(false);
-
   const { item, openEditPopup, openDeletePopup } = props;
-
- //useEffect(async () => {
- //  if (isEdit) {
- //    const { moviestoreService } = props;
- //    const data = await moviestoreService.getMovie(item.id);
-
- //    props.setMovieDetails(data);
- //  }
- //}, [isEdit]);
 
   const handleShowDetail = () => {
     props.setHeaderMovie(true);
@@ -42,7 +30,12 @@ const MovieItem = (props) => {
 
   return (
     <div className="item-box">
-      <img className="poster" src={item.poster_path} onClick={handleShowDetail} alt={item.title} />
+      <img
+        className="poster"
+        src={item.poster_path}
+        onClick={handleShowDetail}
+        alt={item.title}
+      />
       <div className="card-box">
         <div>{item.title}</div>
         <div>Release date: {item.release_date}</div>
@@ -51,7 +44,11 @@ const MovieItem = (props) => {
       <button type="button" className="btn" onClick={() => openEditPopup(item)}>
         EDIT MOVIE
       </button>
-      <button type="button" className="btn" onClick={() => openDeletePopup(item)}>
+      <button
+        type="button"
+        className="btn"
+        onClick={() => openDeletePopup(item)}
+      >
         DEL MOVIE
       </button>
     </div>
