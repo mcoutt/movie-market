@@ -1,10 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const Page404 = () => {
-  <div>
-    <p>404</p>
-    <a href="/">Back to Home page</a>
-  </div>;
+export const Page404 = () => {
+  return (
+    <div>
+      <h1 className="page404">404</h1>
+      <Link to="/">Back to Home page</Link>
+    </div>
+  );
 };
-
-export default Page404;

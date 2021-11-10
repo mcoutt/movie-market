@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import propTypes from "prop-types";
 
 import "./movie-item.scss";
@@ -8,9 +8,12 @@ import { setMovieDetails, setHeaderMovie, deleteMovie } from "../../actions";
 import { compose } from "../../utils";
 import { withMoviestoreService } from "../hoc";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 const MovieItem = (props) => {
   const { item, openEditPopup, openDeletePopup } = props;
+
+  useEffect(() => {});
 
   const handleShowDetail = () => {
     props.setHeaderMovie(true);
@@ -37,7 +40,9 @@ const MovieItem = (props) => {
         alt={item.title}
       />
       <div className="card-box">
-        <div>{item.title}</div>
+        <div>
+          <Link to={`/film/${item.id}`}>{item.title}</Link>
+        </div>
         <div>Release date: {item.release_date}</div>
       </div>
       <div>{item.genres.join(", ")}</div>
@@ -65,7 +70,7 @@ MovieItem.propTypes = {
   }),
 };
 
-const mapStateToProps = ({ movies, movie }) => {
+const mapStateToProps = ({ movies }) => {
   return {
     movies,
   };
