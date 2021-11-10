@@ -10,7 +10,7 @@ import "./search-item.scss";
 const SearchItem = (props) => {
   const { moviestoreService } = props;
 
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState("release_date");
   const [searchRequest, setSearchRequest] = useState("");
 
   useEffect(async () => {

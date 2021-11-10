@@ -13,9 +13,9 @@ const DelPopup = (props) => {
   useEffect(async () => {}, [action]);
 
   const handleSubmit = async (event) => {
+    props.deleteMovie(item.id);
     event.preventDefault();
     await moviestoreService.deleteMovie(item.id);
-    props.deleteMovie(item.id);
     closePopup();
   };
 

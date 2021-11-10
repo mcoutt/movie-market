@@ -10,13 +10,20 @@ const results = (response) => {
 
 export class MoviestoreServiceLocal {
   getMovies = async (queryParams = undefined) => {
-    const limit =
-      queryParams && queryParams.limit ? queryParams.limit : undefined;
-    const filter =
-      queryParams && queryParams.filter ? queryParams.filter : undefined;
-    const search =
-      queryParams && queryParams.search ? queryParams.search : undefined;
-    const sort = queryParams && queryParams.sort ? queryParams.sort : undefined;
+    let sort;
+    let limit;
+    let filter;
+    let search;
+    if (queryParams === undefined) {
+      sort = "release_date";
+    } else {
+      limit = queryParams && queryParams.limit ? queryParams.limit : undefined;
+      filter =
+        queryParams && queryParams.filter ? queryParams.filter : undefined;
+      search =
+        queryParams && queryParams.search ? queryParams.search : undefined;
+      sort = queryParams.sort ? queryParams.sort : "release_date";
+    }
     console.log(
       `limit: ${limit}; filter: ${filter}; search: ${search}; sort: ${sort}`
     );
