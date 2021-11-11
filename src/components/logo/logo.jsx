@@ -17,7 +17,6 @@ const Logo = (props) => {
   };
 
   const handleClose = () => {
-    console.log("######## close");
     setShowPopup(false);
   };
 

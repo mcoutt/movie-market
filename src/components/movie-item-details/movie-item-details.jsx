@@ -6,35 +6,22 @@ import { setMovieDetails, setHeaderMovie } from "../../actions";
 import { compose } from "../../utils";
 import { withMoviestoreService } from "../hoc";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 import "./movie-item-details.scss";
 import { useParams } from "react-router-dom";
 import { Spinner } from "../spinner";
 
 const MovieItemDetails = (props) => {
-  const { moviestoreService } = props;
+  const item = props.movie;
   let { id } = useParams();
 
   const getMovie = async () => {
-    const data = await moviestoreService.getMovie(parseInt(id));
-    console.log(`------ data: ${data}`);
-    props.setMovieDetails(data);
-    setItem(props.movie);
-  };
+    const { moviestoreService } = props;
+    const data = await moviestoreService.getMovie(item.id);
 
-  const [item, setItem] = useState(undefined);
-  const [loaded, setLoaded] = useState(false);
-  const _item = props.movie;
-  setItem(_item);
-  setLoaded(false);
-  useEffect(async () => {
-    console.log(`use effect: ${loaded}`);
-    if (loaded) {
-      console.log(`use effect: ${loaded}`);
-      await getMovie();
-      setLoaded(true);
-    }
-  }, []);
+    props.setMovieDetails(data);
+  };
 
   const handleShowDetail = async () => {
     await getMovie();
@@ -42,28 +29,24 @@ const MovieItemDetails = (props) => {
   };
 
   return (
-    <>
-      {!loaded ? (
-        <div className="card">
-          <img
-            src={item.poster_path}
-            onClick={handleShowDetail}
-            className="card-img-top img"
-            alt={item.title}
-          />
-          <div className="card-body">
-            <h5 className="card-title">{item.title}</h5>
-            <p className="card-text">{item.overview}</p>
-            <p className="card-text">{item.genres.join(", ")}</p>
-            <p className="card-text">Release date: {item.release_date}</p>
-            <p className="card-text">Vote average: {item.vote_average}</p>
-            <p className="card-text">Vote count: {item.vote_count}</p>
-          </div>
-        </div>
-      ) : (
-        <Spinner />
-      )}
-    </>
+    <div className="card">
+      <img
+        src={item.poster_path}
+        className="card-img-top img"
+        onClick={handleShowDetail}
+        alt={item.title}
+      />
+      <div className="card-body">
+        <h5 className="card-title">
+          <Link to={`/film/${item.id}`}>{item.title}</Link>
+        </h5>
+        <p className="card-text">{item.overview}</p>
+        <p className="card-text">{item.genres.join(", ")}</p>
+        <p className="card-text">Release date: {item.release_date}</p>
+        <p className="card-text">Vote average: {item.vote_average}</p>
+        <p className="card-text">Vote count: {item.vote_count}</p>
+      </div>
+    </div>
   );
 };
 

@@ -37,6 +37,21 @@ const reducer = (state = initialState, action) => {
         ...state,
         delMovie: action.payload,
       };
+    case "SEARCH_MOVIE":
+      return {
+        ...state,
+        searchQuery: action.payload,
+      };
+    case "FILTER_MOVIE":
+      return {
+        ...state,
+        filterQuery: action.payload,
+      };
+    case "SORT_MOVIE":
+      return {
+        ...state,
+        sortQuery: action.payload,
+      };
     default:
       return state;
   }

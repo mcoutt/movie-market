@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import propTypes from "prop-types";
 
 import "./movie-item.scss";
@@ -12,8 +12,6 @@ import { Link } from "react-router-dom";
 
 const MovieItem = (props) => {
   const { item, openEditPopup, openDeletePopup } = props;
-
-  useEffect(() => {});
 
   const handleShowDetail = () => {
     props.setHeaderMovie(true);

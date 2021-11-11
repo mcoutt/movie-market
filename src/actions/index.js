@@ -47,6 +47,27 @@ const deleteMovie = (movieId) => {
   };
 };
 
+const searchMovie = (searchQuery) => {
+  return {
+    type: "SEARCH_MOVIE",
+    payload: searchQuery,
+  };
+};
+
+const filterMovie = (filterQuery) => {
+  return {
+    type: "FILTER_MOVIE",
+    payload: filterQuery,
+  };
+};
+
+const sortMovie = (sortQuery) => {
+  return {
+    type: "SORT_MOVIE",
+    payload: sortQuery,
+  };
+};
+
 export {
   moviesLoaded,
   setMovieDetails,
@@ -55,4 +76,7 @@ export {
   editMovie,
   deleteMovie,
   setHeaderMovie,
+  searchMovie,
+  filterMovie,
+  sortMovie,
 };
