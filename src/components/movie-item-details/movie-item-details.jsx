@@ -6,6 +6,7 @@ import { setMovieDetails, setHeaderMovie } from "../../actions";
 import { compose } from "../../utils";
 import { withMoviestoreService } from "../hoc";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 import "./movie-item-details.scss";
 
@@ -28,12 +29,14 @@ const MovieItemDetails = (props) => {
     <div className="card">
       <img
         src={item.poster_path}
-        onClick={handleShowDetail}
         className="card-img-top img"
+        onClick={handleShowDetail}
         alt={item.title}
       />
       <div className="card-body">
-        <h5 className="card-title">{item.title}</h5>
+        <h5 className="card-title">
+          <Link to={`/film/${item.id}`}>{item.title}</Link>
+        </h5>
         <p className="card-text">{item.overview}</p>
         <p className="card-text">{item.genres.join(", ")}</p>
         <p className="card-text">Release date: {item.release_date}</p>

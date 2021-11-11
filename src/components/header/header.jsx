@@ -12,8 +12,8 @@ import MovieItemDetails from "../movie-item-details/movie-item-details";
 const HeaderItem = ({ header }) => {
   const [showSearch, setShowSearch] = useState(false);
 
-  const handleSearchLogo = (search) => {
-    setShowSearch(search);
+  const handleSearchLogo = (searchRequest) => {
+    setShowSearch(searchRequest);
   };
   return (
     <section className="py-5 text-center container">
@@ -31,7 +31,7 @@ const HeaderItem = ({ header }) => {
   );
 };
 
-const mapStateToProps = ({ movie, header }) => {
+const mapStateToProps = ({ header }) => {
   return {
     header,
   };

@@ -1,83 +1,62 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { bindActionCreators } from "redux";
-import { moviesLoaded } from "../../actions";
+import { moviesLoaded, filterMovie, sortMovie } from "../../actions";
 import { withMoviestoreService } from "../hoc";
 import { connect } from "react-redux";
 import "./genre-filter.scss";
 
 const GenreFilter = (props) => {
-  const { moviestoreService } = props;
+  const { moviestoreService, filterQuery, filterMovie, sortQuery, sortMovie } =
+    props;
 
-  const [filter, setFilter] = useState("");
-  const [sort, setSort] = useState("release_date");
-
-  const sortMovie = (newSortItem) => {
-    setSort(newSortItem);
+  const sortingMovie = (e) => {
+    console.log(`--- sort event: ${e.target.value}`);
+    sortMovie(e.target.value);
   };
   useEffect(async () => {
-    const data = await moviestoreService.getMovies({ filter, sort });
+    const data = await moviestoreService.getMovies({ filterQuery, sortQuery });
     props.moviesLoaded(data);
-  }, [filter, sort]);
+  }, [filterQuery, sortQuery]);
 
-  const handleAll = () => {
-    setFilter("");
+  const handleGenreFilter = (e) => {
+    console.log(`--- filter event: ${e.target.innerText.toLowerCase()}`);
+    filterMovie(e.target.innerText.toLowerCase());
   };
-  const handleDocumentary = () => {
-    setFilter("documentary");
-  };
-  const handleComedy = async () => {
-    await setFilter("comedy");
-  };
-  const handleHorror = async () => {
-    await setFilter("horror");
-  };
-  const handleCrime = () => {
-    setFilter("crime");
-  };
+
+  const genres = ["All", "Documentary", "Comedy", "Horror", "Crime"];
 
   return (
     <div className="genre-wrapper">
       <div className="genres">
-        <p className="genre" onClick={handleAll}>
-          All
-        </p>
-        <p className="genre" onClick={handleDocumentary}>
-          Documentary
-        </p>
-        <p className="genre" onClick={handleComedy}>
-          Comedy
-        </p>
-        <p className="genre" onClick={handleHorror}>
-          Horror
-        </p>
-        <p className="genre" onClick={handleCrime}>
-          Crime
-        </p>
+        {genres.map((i) => (
+          <p className="genre" onClick={handleGenreFilter}>
+            {i}
+          </p>
+        ))}
       </div>
       <p>
         SORT BY
-        <select
-          className="sort"
-          onChange={(event) => sortMovie(event.target.value)}
-          value={sort}
-        >
-          <option value="release_date">release date</option>
-          <option value="vote_average">rating</option>
-          <option value="genres">genres</option>
+        <select className="sort" onChange={sortingMovie} value={sortQuery}>
+          <option value="default">Select..</option>
+          <option value="release_date">Release date</option>
+          <option value="vote_average">Rating</option>
+          <option value="genres">Genres</option>
         </select>
       </p>
     </div>
   );
 };
 
-const mapStateToProps = ({ movies }) => {
+const mapStateToProps = ({ movies, filterQuery, sortQuery }) => {
   return {
     movies,
+    filterQuery,
+    sortQuery,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ moviesLoaded }, dispatch);
+  return bindActionCreators({ moviesLoaded, filterMovie, sortMovie }, dispatch);
 };
 
 export default withMoviestoreService()(

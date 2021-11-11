@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { bindActionCreators } from "redux";
-import { moviesLoaded } from "../../actions";
+import { moviesLoaded, searchMovie } from "../../actions";
 import { compose } from "../../utils";
 import { withMoviestoreService } from "../hoc";
 import { connect } from "react-redux";
@@ -8,24 +8,27 @@ import { connect } from "react-redux";
 import "./search-item.scss";
 
 const SearchItem = (props) => {
-  const { moviestoreService } = props;
+  const { moviestoreService, searchQuery } = props;
 
-  const [search, setSearch] = useState("release_date");
   const [searchRequest, setSearchRequest] = useState("");
 
   useEffect(async () => {
-    const data = await moviestoreService.getMovies({ search });
-    await props.moviesLoaded(data);
-  }, [search, searchRequest]);
+    if (searchQuery) {
+      const data = await moviestoreService.getMovies({ searchQuery });
+      await props.moviesLoaded(data);
+    }
+  }, [searchQuery, searchRequest]);
 
-  const handleInput = async (e) => {
-    await setSearch(e.target.value);
+  const handleInput = (e) => {
+    props.searchMovie(e.target.value);
+    setSearchRequest(e.target.value);
   };
 
-  const handleSubmit = async (props) => {
+  const handleSubmit = (props) => {
+    props.searchMovie(searchRequest);
     props.preventDefault();
-    await setSearchRequest(search);
   };
+  console.log(`searchRequest: ${searchRequest}`);
 
   return (
     <div className="search-form">
@@ -46,9 +49,10 @@ const SearchItem = (props) => {
   );
 };
 
-const mapStateToProps = ({ movies }) => {
+const mapStateToProps = ({ movies, searchQuery }) => {
   return {
     movies,
+    searchQuery,
   };
 };
 
@@ -56,6 +60,7 @@ const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
       moviesLoaded,
+      searchMovie,
     },
     dispatch
   );

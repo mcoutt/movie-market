@@ -37,7 +37,10 @@ const MovieItem = (props) => {
         alt={item.title}
       />
       <div className="card-box">
-        <div>{item.title}</div>
+        <div>
+          Title
+          <div>{item.title}</div>
+        </div>
         <div>Release date: {item.release_date}</div>
       </div>
       <div>{item.genres.join(", ")}</div>
@@ -65,7 +68,7 @@ MovieItem.propTypes = {
   }),
 };
 
-const mapStateToProps = ({ movies, movie }) => {
+const mapStateToProps = ({ movies }) => {
   return {
     movies,
   };

@@ -19,10 +19,14 @@ export class MoviestoreServiceLocal {
     } else {
       limit = queryParams && queryParams.limit ? queryParams.limit : undefined;
       filter =
-        queryParams && queryParams.filter ? queryParams.filter : undefined;
+        queryParams && queryParams.filterQuery
+          ? queryParams.filterQuery
+          : undefined;
       search =
-        queryParams && queryParams.search ? queryParams.search : undefined;
-      sort = queryParams.sort ? queryParams.sort : "release_date";
+        queryParams && queryParams.searchQuery
+          ? queryParams.searchQuery
+          : undefined;
+      sort = queryParams.sortQuery ? queryParams.sortQuery : "release_date";
     }
     console.log(
       `limit: ${limit}; filter: ${filter}; search: ${search}; sort: ${sort}`
