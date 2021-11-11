@@ -19,8 +19,11 @@ const GenreFilter = (props) => {
   }, [filterQuery, sortQuery]);
 
   const handleGenreFilter = (e) => {
-    console.log(`--- filter event: ${e.target.innerText.toLowerCase()}`);
-    filterMovie(e.target.innerText.toLowerCase());
+    if (e.target.innerText === "All") {
+      filterMovie("");
+    } else {
+      filterMovie(e.target.innerText.toLowerCase());
+    }
   };
 
   const genres = ["All", "Documentary", "Comedy", "Horror", "Crime"];

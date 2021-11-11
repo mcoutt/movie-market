@@ -6,6 +6,7 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case "MOVIES_LOADED":
       return {
+        ...state,
         movies: action.payload,
       };
     case "SET_MOVIE_DETAILS":
