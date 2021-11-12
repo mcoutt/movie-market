@@ -22,6 +22,7 @@ const reducer = (state = initialState, action) => {
     case "GET_MOVIE_DETAILS":
       return {
         ...state,
+        movie: action.payload,
       };
     case "CREATE_MOVIE":
       return {

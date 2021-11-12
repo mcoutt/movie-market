@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { editMovie, setMovieDetails } from "../../actions";
+import { editMovie, setMovieDetails, getMovieDetails } from "../../actions";
 import CloseButton from "./close-button";
 
 const Option = (props) => {
@@ -26,7 +26,18 @@ const Option = (props) => {
 };
 
 const EditPopup = (props) => {
-  const { closePopup, item, moviestoreService } = props;
+  const { closePopup, item, moviestoreService, movie } = props;
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (isLoading) {
+      const _movie = moviestoreService.getMovie(item.id);
+      props.setMovieDetails(_movie);
+      setIsLoading(false);
+    }
+  }, [isLoading]);
+
   const genreOptions = item.genres.map((genre) => {
     return {
       value: genre.toLowerCase(),
@@ -84,11 +95,8 @@ const EditPopup = (props) => {
     poster_path: item.poster_path,
     genres: genreOptions,
     overview: item.overview,
-    vote_average: 0,
-    vote_count: 0,
-    budget: 0,
-    revenue: item.revenue,
-    runtime: item.runtime,
+    revenue: item.revenue ? item.revenue : 0,
+    runtime: item.runtime ? item.runtime : 0,
   };
 
   const validationSchema = Yup.object().shape({
@@ -99,7 +107,8 @@ const EditPopup = (props) => {
     overview: Yup.string().required(
       "Short description of the movie is required"
     ),
-    runtime: Yup.string().required("Movie duration time is required"),
+    revenue: Yup.number(),
+    runtime: Yup.number(),
   });
 
   return (
@@ -124,7 +133,7 @@ const EditPopup = (props) => {
           }) => (
             <Form>
               <div className="headerTitle">
-                <label>EDIT !! MOVIE</label>
+                <label>EDIT MOVIE</label>
               </div>
               <div>
                 <p className="titles">TITLE</p>
@@ -136,6 +145,7 @@ const EditPopup = (props) => {
                   className="input-data-area"
                   value={values.title}
                 />
+                <ErrorMessage name="title" render={(msg) => <div>{msg}</div>} />
               </div>
               <div>
                 <p className="titles">RELEASE DATE</p>
@@ -146,6 +156,10 @@ const EditPopup = (props) => {
                   onBlur={handleBlur}
                   className="input-data-area"
                   value={values.release_date}
+                />
+                <ErrorMessage
+                  name="release_date"
+                  render={(msg) => <div>{msg}</div>}
                 />
               </div>
               <div>
@@ -158,6 +172,10 @@ const EditPopup = (props) => {
                   className="input-data-area"
                   value={values.poster_path}
                 />
+                <ErrorMessage
+                  name="poster_path"
+                  render={(msg) => <div>{msg}</div>}
+                />
               </div>
               <div>
                 <p className="titles">RATING</p>
@@ -168,6 +186,10 @@ const EditPopup = (props) => {
                   onBlur={handleBlur}
                   className="input-data-area"
                   value={values.revenue}
+                />
+                <ErrorMessage
+                  name="revenue"
+                  render={(msg) => <div>{msg}</div>}
                 />
               </div>
               <div>
@@ -205,6 +227,10 @@ const EditPopup = (props) => {
                   className="input-data-area"
                   value={values.overview}
                 />
+                <ErrorMessage
+                  name="overview"
+                  render={(msg) => <div>{msg}</div>}
+                />
               </div>
               <div>
                 <p className="titles">RUNTIME</p>
@@ -216,6 +242,10 @@ const EditPopup = (props) => {
                   className="input-data-area"
                   value={values.runtime}
                 />
+                <ErrorMessage
+                  name="runtime"
+                  render={(msg) => <div>{msg}</div>}
+                />
               </div>
               <div className="outer">
                 <div className="inner">
@@ -223,7 +253,6 @@ const EditPopup = (props) => {
                   <button
                     type="submit"
                     className="submitButton"
-                    // value="SUBMIT"
                     disabled={isSubmitting}
                   />
                 </div>
@@ -236,7 +265,7 @@ const EditPopup = (props) => {
   );
 };
 
-const mapStateToProps = ({ movies, movie, newMovie }) => {
+const mapStateToProps = ({ movies, movie }) => {
   return {
     movies,
     movie,
@@ -244,7 +273,10 @@ const mapStateToProps = ({ movies, movie, newMovie }) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ editMovie, setMovieDetails }, dispatch);
+  return bindActionCreators(
+    { editMovie, setMovieDetails, getMovieDetails },
+    dispatch
+  );
 };
 
 export default compose(

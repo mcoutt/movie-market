@@ -38,7 +38,7 @@ const AddPopup = (props) => {
     title: "",
     release_date: "",
     poster_path: "",
-    genres: [],
+    genres: "",
     overview: "",
     revenue: 0,
     runtime: 0,
@@ -48,11 +48,12 @@ const AddPopup = (props) => {
     title: Yup.string().required("Title is required"),
     release_date: Yup.string().required("Release date is required"),
     poster_path: Yup.string().required("Url to the poster image is required"),
-    genres: Yup.array().required("List of genres is required"),
+    genres: Yup.string().required("List of genres is required"),
     overview: Yup.string().required(
       "Short description of the movie is required"
     ),
-    runtime: Yup.string().required("Movie duration time is required"),
+    runtime: Yup.number().required("Movie duration time is required"),
+    revenue: Yup.number().required("Movie revenue is required"),
   });
 
   return (
@@ -86,6 +87,7 @@ const AddPopup = (props) => {
                   placeholder="Title there"
                   className="input-data-area placeholder"
                 />
+                <ErrorMessage name="title" render={(msg) => <div>{msg}</div>} />
               </div>
               <div>
                 <p className="titles">RELEASE DATE</p>
@@ -94,6 +96,10 @@ const AddPopup = (props) => {
                   type="date"
                   name="release_date"
                   placeholder="Release date there"
+                />
+                <ErrorMessage
+                  name="release_date"
+                  render={(msg) => <div>{msg}</div>}
                 />
               </div>
               <div>
@@ -104,6 +110,10 @@ const AddPopup = (props) => {
                   placeholder="Movie URL here"
                   className="input-data-area placeholder"
                 />
+                <ErrorMessage
+                  name="poster_path"
+                  render={(msg) => <div>{msg}</div>}
+                />
               </div>
               <div>
                 <p className="titles">RATING</p>
@@ -112,6 +122,10 @@ const AddPopup = (props) => {
                   name="revenue"
                   className="input-data-area placeholder"
                   placeholder="Revenue there"
+                />
+                <ErrorMessage
+                  name="revenue"
+                  render={(msg) => <div>{msg}</div>}
                 />
               </div>
               <div>
@@ -123,6 +137,10 @@ const AddPopup = (props) => {
                     className="input-data-area placeholder"
                     placeholder="Add genres by space"
                   />
+                  <ErrorMessage
+                    name="genres"
+                    render={(msg) => <div>{msg}</div>}
+                  />
                 </label>
               </div>
               <div>
@@ -133,6 +151,10 @@ const AddPopup = (props) => {
                   className="input-data-area placeholder"
                   placeholder="Overview there"
                 />
+                <ErrorMessage
+                  name="overview"
+                  render={(msg) => <div>{msg}</div>}
+                />
               </div>
               <div>
                 <p className="titles">RUNTIME</p>
@@ -142,14 +164,18 @@ const AddPopup = (props) => {
                   className="input-data-area placeholder"
                   placeholder="Runtime there"
                 />
+                <ErrorMessage
+                  name="runtime"
+                  render={(msg) => <div>{msg}</div>}
+                />
               </div>
               <div className="outer">
                 <div className="inner">
                   <input type="reset" className="resetButton" value="RESET" />
-                  <input
+                  <button
                     type="submit"
                     className="submitButton"
-                    value="SUBMIT"
+                    disabled={isSubmitting}
                   />
                 </div>
               </div>

@@ -8,25 +8,24 @@ import { connect } from "react-redux";
 import "./search-item.scss";
 
 const SearchItem = (props) => {
-  const { moviestoreService, searchQuery } = props;
+  const { moviestoreService, searchQuery, searchMovie } = props;
 
   const [searchRequest, setSearchRequest] = useState("");
 
   useEffect(async () => {
     if (searchQuery) {
       const data = await moviestoreService.getMovies({ searchQuery });
-      await props.moviesLoaded(data);
+      props.moviesLoaded(data);
     }
-  }, [searchQuery, searchRequest]);
+  }, [searchQuery]);
 
   const handleInput = (e) => {
-    props.searchMovie(e.target.value);
     setSearchRequest(e.target.value);
   };
 
-  const handleSubmit = (props) => {
-    props.searchMovie(searchRequest);
-    props.preventDefault();
+  const handleSubmit = () => {
+    console.log(`----- handle submit: ${searchRequest}`);
+    searchMovie(searchRequest);
   };
   console.log(`searchRequest: ${searchRequest}`);
 
@@ -49,11 +48,8 @@ const SearchItem = (props) => {
   );
 };
 
-const mapStateToProps = ({ movies, searchQuery }) => {
-  return {
-    movies,
-    searchQuery,
-  };
+const mapStateToProps = (props) => {
+  return props;
 };
 
 const mapDispatchToProps = (dispatch) => {

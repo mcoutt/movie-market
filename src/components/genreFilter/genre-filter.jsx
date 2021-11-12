@@ -10,7 +10,6 @@ const GenreFilter = (props) => {
     props;
 
   const sortingMovie = (e) => {
-    console.log(`--- sort event: ${e.target.value}`);
     sortMovie(e.target.value);
   };
   useEffect(async () => {
@@ -32,7 +31,7 @@ const GenreFilter = (props) => {
     <div className="genre-wrapper">
       <div className="genres">
         {genres.map((i) => (
-          <p className="genre" onClick={handleGenreFilter}>
+          <p className="genre" key={i} onClick={handleGenreFilter}>
             {i}
           </p>
         ))}

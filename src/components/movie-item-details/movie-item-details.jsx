@@ -6,18 +6,21 @@ import { setMovieDetails, setHeaderMovie } from "../../actions";
 import { compose } from "../../utils";
 import { withMoviestoreService } from "../hoc";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import "./movie-item-details.scss";
-import { useParams } from "react-router-dom";
-import { Spinner } from "../spinner";
 
 const MovieItemDetails = (props) => {
+  const { moviestoreService } = props;
   const item = props.movie;
-  let { id } = useParams();
+
+  useEffect(() => {
+    if (item === undefined) {
+      console.log(`------ item undefined: ${props.toString()}`);
+    }
+  });
 
   const getMovie = async () => {
-    const { moviestoreService } = props;
     const data = await moviestoreService.getMovie(item.id);
 
     props.setMovieDetails(data);
@@ -40,11 +43,16 @@ const MovieItemDetails = (props) => {
         <h5 className="card-title">
           <Link to={`/film/${item.id}`}>{item.title}</Link>
         </h5>
+        <p className="card-text">{item.id}</p>
         <p className="card-text">{item.overview}</p>
         <p className="card-text">{item.genres.join(", ")}</p>
         <p className="card-text">Release date: {item.release_date}</p>
         <p className="card-text">Vote average: {item.vote_average}</p>
         <p className="card-text">Vote count: {item.vote_count}</p>
+        <p className="card-text">Runtime: {item.runtime}</p>
+        <p className="card-text">Revenue: {item.revenue}</p>
+        <p className="card-text">Budget: {item.budget}</p>
+        <p className="card-text">Tagline: {item.tagline}</p>
       </div>
     </div>
   );
@@ -63,6 +71,7 @@ MovieItemDetails.propTypes = {
     revenue: propTypes.number,
     runtime: propTypes.number,
     genres: propTypes.array,
+    tagline: propTypes.string,
   }),
 };
 

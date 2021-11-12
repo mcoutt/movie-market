@@ -17,7 +17,7 @@ export class MoviestoreServiceLocal {
     if (queryParams === undefined) {
       sort = "release_date";
     } else {
-      limit = queryParams && queryParams.limit ? queryParams.limit : undefined;
+      // limit = queryParams && queryParams.limit ? queryParams.limit : undefined;
       filter =
         queryParams && queryParams.filterQuery
           ? queryParams.filterQuery
@@ -41,7 +41,17 @@ export class MoviestoreServiceLocal {
       : sort
       ? `http://localhost:4000/movies?sortBy=${sort}&sortOrder=desc`
       : "http://localhost:4000/movies";
+
+    console.log(
+      `------  query string -filter ${filter} -search ${search} -sort ${sort}`
+    );
+    console.log(`------  query ${query}`);
+
     const response = await axios.get(query);
+    console.log(
+      `------  RESPONSE - ${JSON.stringify(response.data.totalAmount)}`
+    );
+
     return results(response);
   };
 
