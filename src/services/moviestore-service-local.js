@@ -1,4 +1,5 @@
 import axios from "axios";
+import { string } from "yup";
 
 const results = (response) => {
   if (response.status === 200) {
@@ -10,46 +11,33 @@ const results = (response) => {
 
 export class MoviestoreServiceLocal {
   getMovies = async (queryParams = undefined) => {
-    let sort;
-    let limit;
     let filter;
     let search;
+    let sort;
+    let queryHost = "http://localhost:4000/movies?";
     if (queryParams === undefined) {
       sort = "release_date";
     } else {
-      // limit = queryParams && queryParams.limit ? queryParams.limit : undefined;
       filter =
         queryParams && queryParams.filterQuery
-          ? queryParams.filterQuery
-          : undefined;
+          ? `filter=${queryParams.filterQuery}`
+          : "";
       search =
         queryParams && queryParams.searchQuery
-          ? queryParams.searchQuery
-          : undefined;
-      sort = queryParams.sortQuery ? queryParams.sortQuery : "release_date";
+          ? `search=${queryParams.searchQuery}&searchBy=title&`
+          : "";
+      sort = queryParams.sortQuery
+        ? `sortBy=${queryParams.sortQuery}&sortOrder=desc&`
+        : `sortBy=release_date&sortOrder=desc&`;
     }
-    console.log(
-      `limit: ${limit}; filter: ${filter}; search: ${search}; sort: ${sort}`
-    );
 
-    let query = limit
-      ? `http://localhost:4000/movies?limit=${limit}`
-      : filter
-      ? `http://localhost:4000/movies?filter=${filter}`
-      : search
-      ? `http://localhost:4000/movies?search=${search}&searchBy=title`
-      : sort
-      ? `http://localhost:4000/movies?sortBy=${sort}&sortOrder=desc`
-      : "http://localhost:4000/movies";
+    const query = queryHost + filter + search + sort;
 
-    console.log(
-      `------  query string -filter ${filter} -search ${search} -sort ${sort}`
-    );
     console.log(`------  query ${query}`);
 
     const response = await axios.get(query);
     console.log(
-      `------  RESPONSE - ${JSON.stringify(response.data.totalAmount)}`
+      `------  RESPONSE ${JSON.stringify(response.data.totalAmount)}`
     );
 
     return results(response);

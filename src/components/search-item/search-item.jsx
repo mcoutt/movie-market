@@ -12,13 +12,6 @@ const SearchItem = (props) => {
 
   const [searchRequest, setSearchRequest] = useState("");
 
-  useEffect(async () => {
-    if (searchQuery) {
-      const data = await moviestoreService.getMovies({ searchQuery });
-      props.moviesLoaded(data);
-    }
-  }, [searchQuery]);
-
   const handleInput = (e) => {
     setSearchRequest(e.target.value);
   };
@@ -27,29 +20,36 @@ const SearchItem = (props) => {
     console.log(`----- handle submit: ${searchRequest}`);
     searchMovie(searchRequest);
   };
+
+  useEffect(async () => {
+    const data = await moviestoreService.getMovies({ searchQuery });
+    props.moviesLoaded(data);
+  }, [searchQuery]);
+
   console.log(`searchRequest: ${searchRequest}`);
 
   return (
     <div className="search-form">
       <h2 className="search-form-title">Find your movie</h2>
-      <form>
-        <input
-          type="text"
-          className="searchInput"
-          placeholder="What do you want to watch?"
-          aria-label="Recipient's username with two button addons"
-          onChange={handleInput}
-        />
-        <button className="searchButton" onClick={handleSubmit} type="submit">
-          SEARCH
-        </button>
-      </form>
+      <input
+        type="text"
+        className="searchInput"
+        placeholder="What do you want to watch?"
+        aria-label="Recipient's username with two button addons"
+        onChange={handleInput}
+      />
+      <button className="searchButton" onClick={handleSubmit} type="submit">
+        SEARCH
+      </button>
     </div>
   );
 };
 
-const mapStateToProps = (props) => {
-  return props;
+const mapStateToProps = ({ searchQuery, searchMovie }) => {
+  return {
+    searchQuery,
+    searchMovie,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
