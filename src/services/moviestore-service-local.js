@@ -16,22 +16,24 @@ export class MoviestoreServiceLocal {
     let sort;
     let queryHost = "http://localhost:4000/movies?";
     if (queryParams === undefined) {
-      sort = "release_date";
+      sort = `sortBy=release_date&sortOrder=desc&`;
     } else {
       filter =
         queryParams && queryParams.filterQuery
-          ? `filter=${queryParams.filterQuery}`
-          : "";
+          ? `filter=${queryParams.filterQuery}&`
+          : undefined;
       search =
         queryParams && queryParams.searchQuery
           ? `search=${queryParams.searchQuery}&searchBy=title&`
-          : "";
+          : undefined;
       sort = queryParams.sortQuery
         ? `sortBy=${queryParams.sortQuery}&sortOrder=desc&`
         : `sortBy=release_date&sortOrder=desc&`;
     }
 
-    const query = queryHost + filter + search + sort;
+    const query = `${queryHost}${filter ? filter : ""}${
+      search ? search : ""
+    }${sort}`;
 
     console.log(`------  query ${query}`);
 

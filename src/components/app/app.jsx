@@ -1,18 +1,31 @@
 import React from "react";
 import { HomePage, Page404 } from "../pages";
 import MovieItemDetails from "../movie-item-details/movie-item-details";
-import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
 
 import "./app.scss";
 
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route exact path="/" element={<HomePage />} />
-        <Route exact path="/film/:id" element={<MovieItemDetails />} />
-        <Route path="*" element={<Page404 />} />
-      </Routes>
+      <Switch>
+        <Route exact path="/film/:id" component={MovieItemDetails} />
+        <Route
+          exact
+          path="/"
+          render={() => {
+            return <Redirect to="/search" />;
+          }}
+        />
+        <Route path="/search/:searchQuery" component={HomePage} />
+        <Route path="/search" component={HomePage} />
+        <Route path="*" component={Page404} />
+      </Switch>
     </Router>
   );
 }

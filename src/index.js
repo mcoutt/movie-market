@@ -18,7 +18,6 @@ ReactDOM.render(
       </MoviestoreServiceProvider>
     </ErrorBoundry>
   </Provider>,
-
   document.getElementById("root")
 );
 

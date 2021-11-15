@@ -4,6 +4,7 @@ import { moviesLoaded, searchMovie } from "../../actions";
 import { compose } from "../../utils";
 import { withMoviestoreService } from "../hoc";
 import { connect } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
 
 import "./search-item.scss";
 
@@ -17,7 +18,6 @@ const SearchItem = (props) => {
   };
 
   const handleSubmit = () => {
-    console.log(`----- handle submit: ${searchRequest}`);
     searchMovie(searchRequest);
   };
 
@@ -39,7 +39,14 @@ const SearchItem = (props) => {
         onChange={handleInput}
       />
       <button className="searchButton" onClick={handleSubmit} type="submit">
-        SEARCH
+        <Link
+          to={{
+            pathname: "",
+            search: `?searchQuery=${searchRequest}`,
+          }}
+        >
+          SEARCH
+        </Link>
       </button>
     </div>
   );
