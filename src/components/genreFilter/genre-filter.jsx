@@ -14,8 +14,8 @@ const GenreFilter = (props) => {
   const { moviestoreService, filterQuery, filterMovie, sortQuery, sortMovie } =
     props;
 
-  const sortingMovie = (e) => {
-    sortMovie(e.target.value);
+  const sortingMovie = (i) => {
+    sortMovie(i);
     // props.history.push(`movies?sortBy=${event.target.value}`);
   };
   useEffect(async () => {
@@ -36,7 +36,6 @@ const GenreFilter = (props) => {
     Select: "default",
     "Release date": "release_date",
     Rating: "vote_average",
-    Genres: "genres",
   };
 
   return (
@@ -57,35 +56,37 @@ const GenreFilter = (props) => {
       </div>
       <p>
         SORT BY
-        {/*<ul>*/}
-        {/*  {Object.keys(sort).map((i) => (*/}
-        {/*    <li key={i} value={sort[i]}>*/}
-        {/*      <NavLink*/}
-        {/*        key={i}*/}
-        {/*        to={{*/}
-        {/*          pathname: "",*/}
-        {/*          search: `?sortBy=${i.toString()}`,*/}
-        {/*        }}*/}
-        {/*      >*/}
-        {/*        {i}*/}
-        {/*      </NavLink>*/}
-        {/*    </li>*/}
-        {/*  ))}*/}
-        {/*</ul>*/}
-        <select className="sort" onChange={sortingMovie} value={sortQuery}>
+        <ul>
           {Object.keys(sort).map((i) => (
-            <option key={i} value={sort[i]}>
-              {/*<NavLink*/}
-              {/*  key={i}*/}
-              {/*  to={{*/}
-              {/*    pathname: "",*/}
-              {/*    search: `?sortBy=${i.toString()}`,*/}
-              {/*  }}*/}
-              {/*>{i}</NavLink>*/}
-              {i}
-            </option>
+            <li key={i} value={sort[i]} onClick={() => sortingMovie(sort[i])}>
+              <NavLink
+                key={i}
+                to={{
+                  pathname: "",
+                  search: `?sortBy=${i.toString()}`,
+                }}
+              >
+                {i}
+              </NavLink>
+            </li>
           ))}
-        </select>
+        </ul>
+        {/*<select className="sort" onChange={sortingMovie} value={sortQuery}>*/}
+        {/*  {Object.keys(sort).map((i) => (*/}
+        {/*    <option key={i} value={sort[i]}>*/}
+        {/*<NavLink*/}
+        {/*  key={i}*/}
+        {/*  to={{*/}
+        {/*    pathname: "",*/}
+        {/*    search: `?sortBy=${i.toString()}`,*/}
+        {/*  }}*/}
+        {/*>*/}
+        {/*  {i}*/}
+        {/*</NavLink>*/}
+        {/*{i}*/}
+        {/*</option>*/}
+        {/*))}*/}
+        {/*</select>*/}
       </p>
     </div>
   );

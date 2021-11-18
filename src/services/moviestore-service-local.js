@@ -2,6 +2,7 @@ import axios from "axios";
 import { string } from "yup";
 
 const results = (response) => {
+  console.log(`------  results ${response}`);
   if (response.status === 200) {
     return response.data.data;
   } else {
@@ -36,12 +37,8 @@ export class MoviestoreServiceLocal {
     }${sort}`;
 
     console.log(`------  query ${query}`);
-
     const response = await axios.get(query);
-    console.log(
-      `------  RESPONSE ${JSON.stringify(response.data.totalAmount)}`
-    );
-
+    console.log(`------  RESPONSE ${JSON.stringify(response)}`);
     return results(response);
   };
 

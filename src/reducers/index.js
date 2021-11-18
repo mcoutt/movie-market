@@ -1,8 +1,16 @@
 const initialState = {
   movies: [],
+  header: "",
+  movie: {},
+  newMovie: {},
+  updatedMovie: {},
+  delMovie: {},
+  searchQuery: undefined,
+  filterQuery: undefined,
+  sortQuery: "",
 };
 
-const reducer = (state = initialState, action) => {
+export const movies = (state = initialState, action) => {
   switch (action.type) {
     case "MOVIES_LOADED":
       return {
@@ -58,5 +66,3 @@ const reducer = (state = initialState, action) => {
       return state;
   }
 };
-
-export default reducer;
