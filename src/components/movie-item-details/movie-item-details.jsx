@@ -14,12 +14,6 @@ const MovieItemDetails = (props) => {
   const { moviestoreService } = props;
   const item = props.movie;
 
-  useEffect(() => {
-    if (item === undefined) {
-      console.log(`------ item undefined: ${props.toString()}`);
-    }
-  });
-
   const getMovie = async () => {
     const data = await moviestoreService.getMovie(item.id);
 
@@ -33,27 +27,31 @@ const MovieItemDetails = (props) => {
 
   return (
     <div className="card">
-      <img
-        src={item.poster_path}
-        className="card-img-top img"
-        onClick={handleShowDetail}
-        alt={item.title}
-      />
-      <div className="card-body">
-        <h5 className="card-title">
-          <Link to={`/film/${item.id}`}>{item.title}</Link>
-        </h5>
-        <p className="card-text">{item.id}</p>
-        <p className="card-text">{item.overview}</p>
-        <p className="card-text">{item.genres.join(", ")}</p>
-        <p className="card-text">Release date: {item.release_date}</p>
-        <p className="card-text">Vote average: {item.vote_average}</p>
-        <p className="card-text">Vote count: {item.vote_count}</p>
-        <p className="card-text">Runtime: {item.runtime}</p>
-        <p className="card-text">Revenue: {item.revenue}</p>
-        <p className="card-text">Budget: {item.budget}</p>
-        <p className="card-text">Tagline: {item.tagline}</p>
-      </div>
+      {Object.keys(item).length > 0 && (
+        <div>
+          <img
+            src={item.poster_path}
+            className="card-img-top img"
+            onClick={handleShowDetail}
+            alt={item.title}
+          />
+          <div className="card-body">
+            <h5 className="card-title">
+              <Link to={`/film/${item.id}`}>{item.title}</Link>
+            </h5>
+            <p className="card-text">{item.id}</p>
+            <p className="card-text">{item.overview}</p>
+            <p className="card-text">{item.genres.join(", ")}</p>
+            <p className="card-text">Release date: {item.release_date}</p>
+            <p className="card-text">Vote average: {item.vote_average}</p>
+            <p className="card-text">Vote count: {item.vote_count}</p>
+            <p className="card-text">Runtime: {item.runtime}</p>
+            <p className="card-text">Revenue: {item.revenue}</p>
+            <p className="card-text">Budget: {item.budget}</p>
+            <p className="card-text">Tagline: {item.tagline}</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

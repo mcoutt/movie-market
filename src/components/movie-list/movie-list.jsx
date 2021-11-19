@@ -15,8 +15,6 @@ const MovieList = (props) => {
 
   useEffect(async () => {
     const data = await moviestoreService.getMovies();
-    console.log(data);
-
     props.moviesLoaded(data);
   }, [movieToDelete, props.newMovie, props.updatedMovie]);
 
@@ -39,16 +37,18 @@ const MovieList = (props) => {
   return (
     <>
       <div className="movie-list">
-        {props.movies.length > 0
-          ? props.movies.map((item) => (
-              <MovieItem
-                item={item}
-                key={item.id}
-                openEditPopup={handleEditOpen}
-                openDeletePopup={handleDelOpen}
-              />
-            ))
-          : null}
+        {props.movies.length > 0 ? (
+          props.movies.map((item) => (
+            <MovieItem
+              item={item}
+              key={item.id}
+              openEditPopup={handleEditOpen}
+              openDeletePopup={handleDelOpen}
+            />
+          ))
+        ) : (
+          <div></div>
+        )}
       </div>
       {movieToEdit ? (
         <EditPopup item={movieToEdit} closePopup={handleEditClose} />

@@ -18,6 +18,9 @@ const MovieItem = (props) => {
     props.setMovieDetails(item);
   };
 
+  const handleSetDetail = () => {
+    props.setMovieDetails(item);
+  };
   // const kebab = document.querySelector('.kebab'),
   //   middle = document.querySelector('.middle'),
   //   cross = document.querySelector('.cross'),
@@ -38,7 +41,7 @@ const MovieItem = (props) => {
         alt={item.title}
       />
       <div className="card-box">
-        <div>
+        <div onClick={handleSetDetail}>
           <Link to={`/film/${item.id}`}>{item.title}</Link>
         </div>
         <div>Release date: {item.release_date}</div>
