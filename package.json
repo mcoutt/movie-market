@@ -24,8 +24,7 @@
   },
   "scripts": {
     "start": "react-scripts start REACT_APP_PUBLIC_URL=http://localhost:3000",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --testNamePattern='Search Component'",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -49,6 +48,7 @@
   "devDependencies": {
     "cypress": "^9.0.0",
     "enzyme": "^3.11.0",
+    "enzyme-adapter-react-15": "^1.4.3",
     "enzyme-adapter-react-16": "^1.15.6",
     "jest": "26.6.0",
     "prettier": "^2.4.1",

@@ -14,6 +14,16 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
+### For run Cypress tests call the next commands
+
+Run in terminal the
+
+### `yarn run cypress open`
+
+and then, call
+`Run integrations specs`
+in the right corner of browser window
+
 ### `yarn test`
 
 Launches the test runner in the interactive watch mode.\
