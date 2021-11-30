@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { components, default as ReactSelect } from "react-select";
-import "./popup-movie.scss";
+import classes from "./popup-movie.module.scss";
 import { compose } from "../../utils";
 import { withMoviestoreService } from "../hoc";
 import { connect } from "react-redux";

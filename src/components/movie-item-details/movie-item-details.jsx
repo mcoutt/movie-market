@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import propTypes from "prop-types";
-import "../popup-movie/popup-movie.scss";
+// import classes from "../popup-movie/popup-movie.module.scss";
 import { bindActionCreators } from "redux";
 import { setMovieDetails, setHeaderMovie } from "../../actions";
 import { compose } from "../../utils";
@@ -8,7 +8,7 @@ import { withMoviestoreService } from "../hoc";
 import { connect } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 
-import "./movie-item-details.scss";
+import classes from "./movie-item-details.module.scss";
 
 const MovieItemDetails = (props) => {
   const { moviestoreService } = props;
@@ -26,29 +26,34 @@ const MovieItemDetails = (props) => {
   };
 
   return (
-    <div className="card">
+    <div className={classes.card}>
       {Object.keys(item).length > 0 && (
         <div>
           <img
             src={item.poster_path}
-            className="card-img-top img"
+            // className="card-img-top img"
+            className={classes.img}
             onClick={handleShowDetail}
             alt={item.title}
           />
-          <div className="card-body">
-            <h5 className="card-title">
+          <div className={classes.cardBody}>
+            <h5 className={classes.cardTitle}>
               <Link to={`/film/${item.id}`}>{item.title}</Link>
             </h5>
-            <p className="card-text">{item.id}</p>
-            <p className="card-text">{item.overview}</p>
-            <p className="card-text">{item.genres.join(", ")}</p>
-            <p className="card-text">Release date: {item.release_date}</p>
-            <p className="card-text">Vote average: {item.vote_average}</p>
-            <p className="card-text">Vote count: {item.vote_count}</p>
-            <p className="card-text">Runtime: {item.runtime}</p>
-            <p className="card-text">Revenue: {item.revenue}</p>
-            <p className="card-text">Budget: {item.budget}</p>
-            <p className="card-text">Tagline: {item.tagline}</p>
+            <p className={classes.cardText}>{item.id}</p>
+            <p className={classes.cardText}>{item.overview}</p>
+            <p className={classes.cardText}>{item.genres.join(", ")}</p>
+            <p className={classes.cardText}>
+              Release date: {item.release_date}
+            </p>
+            <p className={classes.cardText}>
+              Vote average: {item.vote_average}
+            </p>
+            <p className={classes.cardText}>Vote count: {item.vote_count}</p>
+            <p className={classes.cardText}>Runtime: {item.runtime}</p>
+            <p className={classes.cardText}>Revenue: {item.revenue}</p>
+            <p className={classes.cardText}>Budget: {item.budget}</p>
+            <p className={classes.cardText}>Tagline: {item.tagline}</p>
           </div>
         </div>
       )}

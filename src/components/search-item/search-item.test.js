@@ -10,23 +10,26 @@ import { BrowserRouter } from "react-router-dom";
 import MoviestoreService from "../../services";
 import { initialState, mockMoviesList } from "../../tests/testFixtures";
 import { searchMovie } from "../../actions";
-import { movies } from "../../reducers";
+import { moviesStore } from "../../reducers";
 import store from "../../store";
 import Adapter from "enzyme-adapter-react-15";
 
 configure({ adapter: new Adapter() });
 jest.mock("axios");
+// jest.mock("MoviestoreService", () => ({
+//   getMovies: jest.fn().mockImplementation(),
+//   createMovie: jest.fn().mockImplementation(),
+// }));
 
 // const confMockStore = configureMockStore();
 // const mockStore = confMockStore(initialState);
 // const UserContext = React.createContext();
 
-const createTestStore = () => {
-  const composeEnhancers =
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-  const rootReducer = combineReducers({});
-};
+// const createTestStore = () => {
+//   const composeEnhancers =
+//     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+//   const rootReducer = combineReducers({});
+// };
 
 const AxiosResponse = {
   data: { data: mockMoviesList },
@@ -46,13 +49,13 @@ describe("Search Component", () => {
   });
 
   it("Reducer should return the initialState", () => {
-    expect(movies(undefined, {})).toEqual(initialState);
+    expect(moviesStore(undefined, {})).toEqual(initialState);
   });
 
   it("Reducer should handle the SEARCH_MOVIE action", () => {
     const action = { type: "SEARCH_MOVIE" };
     const expectedState = { ...initialState };
-    expect(movies(initialState, action)).toEqual(expectedState);
+    expect(moviesStore(initialState, action)).toEqual(expectedState);
   });
 
   it("Store test", async () => {
@@ -69,7 +72,7 @@ describe("Search Component", () => {
   });
 
   it("Call getMovies without params", async () => {
-    jest.spyOn(moviestoreService, "getMovies");
+    // jest.spyOn(moviestoreService, "getMovies");
 
     axios.get.mockReturnValueOnce(AxiosResponse);
     const movies = await moviestoreService.getMovies();

@@ -9,7 +9,7 @@ import MovieItemDetails from "../movie-item-details/movie-item-details";
 
 // import "./header.scss";
 
-const HeaderItem = ({ header }) => {
+const HeaderItem = (props) => {
   const [showSearch, setShowSearch] = useState(false);
 
   const handleSearchLogo = (searchRequest) => {
@@ -19,21 +19,17 @@ const HeaderItem = ({ header }) => {
     <section className="py-5 text-center container">
       <div className="col-lg-6 col-md-8 mx-auto">
         <Logo showSearch={showSearch} handleSearchLogo={handleSearchLogo} />
-        {header ? (
-          <div>
-            <MovieItemDetails />
-          </div>
-        ) : (
-          <SearchItem />
-        )}
+        {props.headerMovie ? <MovieItemDetails /> : <SearchItem />}
       </div>
     </section>
   );
 };
 
-const mapStateToProps = ({ header }) => {
+const mapStateToProps = (props) => {
   return {
-    header,
+    ...props,
+    headerMovie:
+      props.headerMovie && props.headerMovie ? props.headerMovie : undefined,
   };
 };
 

@@ -38,7 +38,7 @@ export class MoviestoreServiceLocal {
 
     console.log(`------  query ${query}`);
     const response = await axios.get(query);
-    console.log(`------  RESPONSE ${JSON.stringify(response)}`);
+    // console.log(`------  RESPONSE ${response}`);
     return results(response);
   };
 

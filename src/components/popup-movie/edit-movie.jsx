@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { components, default as ReactSelect } from "react-select";
-import "./popup-movie.scss";
+import classes from "./popup-movie.module.scss";
 import { compose } from "../../utils";
 import { withMoviestoreService } from "../hoc";
 import { connect } from "react-redux";
@@ -112,8 +112,8 @@ const EditPopup = (props) => {
   });
 
   return (
-    <div className="popup">
-      <div className="popup_inner">
+    <div className={classes.popup}>
+      <div className={classes.popup_inner}>
         <CloseButton closePopup={closePopup} />
         <Formik
           initialValues={initialValues}
@@ -132,29 +132,29 @@ const EditPopup = (props) => {
             // handleSubmit,
           }) => (
             <Form>
-              <div className="headerTitle">
+              <div className={classes.headerTitle}>
                 <label>EDIT MOVIE</label>
               </div>
               <div>
-                <p className="titles">TITLE</p>
+                <p className={classes.titles}>TITLE</p>
                 <Field
                   type="title"
                   name="title"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className="input-data-area"
+                  className={classes.inputDataArea}
                   value={values.title}
                 />
                 <ErrorMessage name="title" render={(msg) => <div>{msg}</div>} />
               </div>
               <div>
-                <p className="titles">RELEASE DATE</p>
+                <p className={classes.titles}>RELEASE DATE</p>
                 <Field
                   type="date"
                   name="release_date"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className="input-data-area"
+                  className={classes.inputDataArea}
                   value={values.release_date}
                 />
                 <ErrorMessage
@@ -163,13 +163,13 @@ const EditPopup = (props) => {
                 />
               </div>
               <div>
-                <p className="titles">MOVIE URL</p>
+                <p className={classes.titles}>MOVIE URL</p>
                 <Field
                   type="poster_path"
                   name="poster_path"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className="input-data-area"
+                  className={classes.inputDataArea}
                   value={values.poster_path}
                 />
                 <ErrorMessage
@@ -178,13 +178,13 @@ const EditPopup = (props) => {
                 />
               </div>
               <div>
-                <p className="titles">RATING</p>
+                <p className={classes.titles}>RATING</p>
                 <Field
                   type="text"
                   name="revenue"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className="input-data-area"
+                  className={classes.inputDataArea}
                   value={values.revenue}
                 />
                 <ErrorMessage
@@ -194,7 +194,7 @@ const EditPopup = (props) => {
               </div>
               <div>
                 <label>
-                  <p className="titles">GENRES</p>
+                  <p className={classes.titles}>GENRES</p>
 
                   <span
                     className="input-select"
@@ -218,13 +218,13 @@ const EditPopup = (props) => {
                 </label>
               </div>
               <div>
-                <p className="titles">OVERVIEW</p>
+                <p className={classes.titles}>OVERVIEW</p>
                 <Field
                   type="text"
                   name="overview"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className="input-data-area"
+                  className={classes.inputDataArea}
                   value={values.overview}
                 />
                 <ErrorMessage
@@ -233,13 +233,13 @@ const EditPopup = (props) => {
                 />
               </div>
               <div>
-                <p className="titles">RUNTIME</p>
+                <p className={classes.titles}>RUNTIME</p>
                 <Field
                   type="text"
                   name="runtime"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className="input-data-area"
+                  className={classes.inputDataArea}
                   value={values.runtime}
                 />
                 <ErrorMessage

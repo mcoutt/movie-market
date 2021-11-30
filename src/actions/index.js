@@ -1,7 +1,7 @@
-const moviesLoaded = (newMovies) => {
+const moviesLoaded = async (movies) => {
   return {
-    type: "MOVIES_LOADED",
-    payload: newMovies,
+    type: "GET_MOVIES",
+    payload: movies,
   };
 };
 
@@ -12,10 +12,10 @@ const setMovieDetails = (movie) => {
   };
 };
 
-const setHeaderMovie = (itemHeader) => {
+const setHeaderMovie = (headerMovie) => {
   return {
     type: "SET_HEADER_MOVIE",
-    payload: itemHeader,
+    payload: headerMovie,
   };
 };
 

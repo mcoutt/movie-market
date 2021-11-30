@@ -1,5 +1,6 @@
 import React from "react";
-import "./popup-movie.scss";
+// import * as gClasses from "./*.module.scss";
+import classes from "./popup-movie.module.scss";
 import { compose } from "../../utils";
 import { withMoviestoreService } from "../hoc";
 import { connect } from "react-redux";
@@ -57,8 +58,8 @@ const AddPopup = (props) => {
   });
 
   return (
-    <div className="popup">
-      <div className="popup_inner">
+    <div className={classes.popup}>
+      <div className={classes.popup_inner}>
         <CloseButton closePopup={closePopup} />
         <Formik
           initialValues={initialValues}
@@ -76,23 +77,23 @@ const AddPopup = (props) => {
             isSubmitting,
           }) => (
             <Form>
-              <div className="headerTitle">
+              <div className={classes.headerTitle}>
                 <label>ADD MOVIE</label>
               </div>
               <div>
-                <p className="titles">TITLE</p>
+                <p className={classes.titles}>TITLE</p>
                 <Field
                   type="title"
                   name="title"
                   placeholder="Title there"
-                  className="input-data-area placeholder"
+                  className={classes.inputDataArea}
                 />
                 <ErrorMessage name="title" render={(msg) => <div>{msg}</div>} />
               </div>
               <div>
-                <p className="titles">RELEASE DATE</p>
+                <p className={classes.titles}>RELEASE DATE</p>
                 <Field
-                  className="input-data-area placeholder"
+                  className={classes.inputDataArea}
                   type="date"
                   name="release_date"
                   placeholder="Release date there"
@@ -103,12 +104,12 @@ const AddPopup = (props) => {
                 />
               </div>
               <div>
-                <p className="titles">MOVIE URL</p>
+                <p className={classes.titles}>MOVIE URL</p>
                 <Field
                   type="poster_path"
                   name="poster_path"
                   placeholder="Movie URL here"
-                  className="input-data-area placeholder"
+                  className={classes.inputDataArea}
                 />
                 <ErrorMessage
                   name="poster_path"
@@ -116,11 +117,11 @@ const AddPopup = (props) => {
                 />
               </div>
               <div>
-                <p className="titles">RATING</p>
+                <p className={classes.titles}>RATING</p>
                 <Field
                   type="text"
                   name="revenue"
-                  className="input-data-area placeholder"
+                  className={classes.inputDataArea}
                   placeholder="Revenue there"
                 />
                 <ErrorMessage
@@ -130,11 +131,11 @@ const AddPopup = (props) => {
               </div>
               <div>
                 <label>
-                  <p className="titles">GENRES</p>
+                  <p className={classes.titles}>GENRES</p>
                   <Field
                     type="text"
                     name="genres"
-                    className="input-data-area placeholder"
+                    className={classes.inputDataArea}
                     placeholder="Add genres by space"
                   />
                   <ErrorMessage
@@ -144,11 +145,11 @@ const AddPopup = (props) => {
                 </label>
               </div>
               <div>
-                <p className="titles">OVERVIEW</p>
+                <p className={classes.titles}>OVERVIEW</p>
                 <Field
                   type="text"
                   name="overview"
-                  className="input-data-area placeholder"
+                  className={classes.inputDataArea}
                   placeholder="Overview there"
                 />
                 <ErrorMessage
@@ -157,11 +158,11 @@ const AddPopup = (props) => {
                 />
               </div>
               <div>
-                <p className="titles">RUNTIME</p>
+                <p className={classes.titles}>RUNTIME</p>
                 <Field
                   type="text"
                   name="runtime"
-                  className="input-data-area placeholder"
+                  className={classes.inputDataArea}
                   placeholder="Runtime there"
                 />
                 <ErrorMessage

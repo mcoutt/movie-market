@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { AddPopup } from "../popup-movie";
 
-import "./logo.scss";
+import classes from "./logo.module.scss";
 import { bindActionCreators } from "redux";
 import { setHeaderMovie, setMovieDetails } from "../../actions";
 import { withMoviestoreService } from "../hoc";
@@ -42,7 +42,11 @@ const Logo = (props) => {
     );
   } else {
     renderButton = (
-      <button type="button" className="header-button" onClick={handleOpen}>
+      <button
+        type="button"
+        className={classes.headerButton}
+        onClick={handleOpen}
+      >
         + ADD MOVIE
       </button>
     );
@@ -52,8 +56,8 @@ const Logo = (props) => {
     <div>
       <div>
         <Link to="/">
-          <span className="firstLogo">netflix</span>
-          <span className="secondLogo">roulette</span>
+          <span className={classes.firstLogo}>netflix</span>
+          <span className={classes.secondLogo}>roulette</span>
         </Link>
         {renderButton}
       </div>

@@ -1,14 +1,14 @@
 import React from "react";
 import propTypes from "prop-types";
 
-import "./movie-item.scss";
-import "../popup-movie/popup-movie.scss";
+import classes from "./movie-item.module.scss";
+// import "../popup-movie/popup-movie.scss";
 import { bindActionCreators } from "redux";
 import { setMovieDetails, setHeaderMovie, deleteMovie } from "../../actions";
 import { compose } from "../../utils";
 import { withMoviestoreService } from "../hoc";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 const MovieItem = (props) => {
   const { item, openEditPopup, openDeletePopup } = props;
@@ -33,16 +33,16 @@ const MovieItem = (props) => {
   // });
 
   return (
-    <div className="item-box">
+    <div className={classes.itemBox}>
       <img
-        className="poster"
+        className={classes.poster}
         src={item.poster_path}
         onClick={handleShowDetail}
         alt={item.title}
       />
-      <div className="card-box">
+      <div className={classes.cardBox}>
         <div onClick={handleSetDetail}>
-          <Link to={`/film/${item.id}`}>{item.title}</Link>
+          <Link href={`/film/${item.id}`}>{item.title}</Link>
         </div>
         <div>Release date: {item.release_date}</div>
       </div>
@@ -71,10 +71,8 @@ MovieItem.propTypes = {
   }),
 };
 
-const mapStateToProps = ({ movies }) => {
-  return {
-    movies,
-  };
+const mapStateToProps = (props) => {
+  return props;
 };
 
 const mapDispatchToProps = (dispatch) => {

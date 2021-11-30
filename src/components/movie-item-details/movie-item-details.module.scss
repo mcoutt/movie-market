@@ -1,0 +1,21 @@
+.img {
+  height: 486px;
+  width: 324px;
+}
+
+.card {
+  display: flex;
+}
+
+.card-body {
+  flex: 1 1 auto;
+  padding: 1rem 1rem;
+}
+
+.card-title {
+  margin-bottom: 0.5rem;
+}
+
+.card-text:last-child {
+  margin-bottom: 0;
+}

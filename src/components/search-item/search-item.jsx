@@ -6,7 +6,7 @@ import { withMoviestoreService } from "../hoc";
 import { connect } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 
-import "./search-item.scss";
+import classes from "./search-item.module.scss";
 
 const SearchItem = (props) => {
   const { moviestoreService, searchQuery, searchMovie } = props;
@@ -29,16 +29,20 @@ const SearchItem = (props) => {
   console.log(`searchRequest: ${searchRequest}`);
 
   return (
-    <div className="search-form">
-      <h2 className="search-form-title">Find your movie</h2>
+    <div className={classes.searchForm}>
+      <h2 className={classes.searchFormTitle}>Find your movie</h2>
       <input
         type="text"
-        className="searchInput"
+        className={classes.searchInput}
         placeholder="What do you want to watch?"
         aria-label="Recipient's username with two button addons"
         onChange={handleInput}
       />
-      <button className="searchButton" onClick={handleSubmit} type="submit">
+      <button
+        className={classes.searchButton}
+        onClick={handleSubmit}
+        type="submit"
+      >
         <Link
           to={{
             pathname: "",

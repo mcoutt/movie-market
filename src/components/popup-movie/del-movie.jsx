@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./popup-movie.scss";
+import classes from "./popup-movie.module.scss";
 import { compose } from "../../utils";
 import { withMoviestoreService } from "../hoc";
 import { connect } from "react-redux";
@@ -20,22 +20,23 @@ const DelPopup = (props) => {
   };
 
   return (
-    <div className="popup">
-      <div className="popup_inner">
+    <div className={classes.popup}>
+      <div className={classes.popup_inner}>
         <CloseButton closePopup={closePopup} />
         <form>
-          <div className="deleteItem">
+          <div className={classes.deleteItem}>
             <div>
-              <label className="headerTitle">DELETE MOVIE</label>
+              <label className={classes.headerTitle}>DELETE MOVIE</label>
             </div>
             <div>
-              <label className="titles">
+              <label className={classes.titles}>
                 <p>Are you sure you want to delete this movie?</p>
               </label>
             </div>
             <div>
               <button
-                className="submitButton deleteTitle"
+                // className="submitButton deleteTitle"
+                className={classes.submitButton}
                 onClick={handleSubmit}
               >
                 CONFIRM

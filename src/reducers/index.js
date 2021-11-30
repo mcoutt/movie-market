@@ -1,6 +1,6 @@
 const initialState = {
   movies: [],
-  header: "",
+  headerMovie: false,
   movie: {},
   newMovie: {},
   updatedMovie: {},
@@ -10,9 +10,9 @@ const initialState = {
   sortQuery: "",
 };
 
-export const movies = (state = initialState, action) => {
+export const moviesStore = (state = initialState, action) => {
   switch (action.type) {
-    case "MOVIES_LOADED":
+    case "GET_MOVIES":
       return {
         ...state,
         movies: action.payload,
@@ -25,7 +25,7 @@ export const movies = (state = initialState, action) => {
     case "SET_HEADER_MOVIE":
       return {
         ...state,
-        header: action.payload,
+        headerMovie: action.payload,
       };
     case "GET_MOVIE_DETAILS":
       return {
