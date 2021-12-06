@@ -4,7 +4,8 @@ import { moviesLoaded, searchMovie } from "../../actions";
 import { compose } from "../../utils";
 import { withMoviestoreService } from "../hoc";
 import { connect } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+//import { Link, useLocation } from "react-router-dom";
+import Link from 'next/link'
 
 import classes from "./search-item.module.scss";
 
@@ -26,8 +27,6 @@ const SearchItem = (props) => {
     props.moviesLoaded(data);
   }, [searchQuery]);
 
-  console.log(`searchRequest: ${searchRequest}`);
-
   return (
     <div className={classes.searchForm}>
       <h2 className={classes.searchFormTitle}>Find your movie</h2>
@@ -44,7 +43,7 @@ const SearchItem = (props) => {
         type="submit"
       >
         <Link
-          to={{
+          href={{
             pathname: "",
             search: `?searchQuery=${searchRequest}`,
           }}

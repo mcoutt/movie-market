@@ -5,8 +5,8 @@ const initialState = {
   newMovie: {},
   updatedMovie: {},
   delMovie: {},
-  searchQuery: undefined,
-  filterQuery: undefined,
+  searchQuery: null,
+  filterQuery: null,
   sortQuery: "",
 };
 

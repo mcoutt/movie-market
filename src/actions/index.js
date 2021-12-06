@@ -1,4 +1,4 @@
-const moviesLoaded = async (movies) => {
+const moviesLoaded = (movies) => {
   return {
     type: "GET_MOVIES",
     payload: movies,

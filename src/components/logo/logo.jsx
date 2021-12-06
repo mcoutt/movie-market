@@ -6,7 +6,8 @@ import { bindActionCreators } from "redux";
 import { setHeaderMovie, setMovieDetails } from "../../actions";
 import { withMoviestoreService } from "../hoc";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
+import Link from 'next/link'
 
 const Logo = (props) => {
   const [showPopup, setShowPopup] = useState(false);
@@ -55,9 +56,11 @@ const Logo = (props) => {
   return (
     <div>
       <div>
-        <Link to="/">
-          <span className={classes.firstLogo}>netflix</span>
-          <span className={classes.secondLogo}>roulette</span>
+        <Link href="/">
+          <>
+            <span className={classes.firstLogo}>netflix</span>
+            <span className={classes.secondLogo}>roulette</span>
+          </>
         </Link>
         {renderButton}
       </div>

@@ -5,15 +5,11 @@ import MoviestoreService from "../services";
 import { wrapper } from "../store";
 import { moviesLoaded } from "../../src/actions/index";
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 
 function HomePage(props) {
-  useEffect(() => {
-    props.moviesLoaded();
-  }, [props]);
   return (
     <Fragment>
-      <header>{/*<HeaderItem />*/}</header>
+      <header>{<HeaderItem />}</header>
       <main>
         <SearchPage />
       </main>
@@ -21,25 +17,23 @@ function HomePage(props) {
   );
 }
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => () => {
-  store.dispatch(moviesLoaded());
+export const getServerSideProps = wrapper.getServerSideProps( (store) => async () => {
+  await store.dispatch(fetchMovies());
 });
 
-// export async function getStaticProps() {
-//   const moviestoreService = new MoviestoreService();
-//   const data = await moviestoreService.getMovies();
-//
-//   return {
-//     props: {
-//       movies: data,
-//     },
-//   };
-// }
+function fetchMovies() {
+  return async function (dispatch, getState) {
+    const moviestoreService = new MoviestoreService();
+    const data = await moviestoreService.getMovies();
 
-const mapDispatchToProps = (dispatch) => {
+    return dispatch(moviesLoaded(data));
+  };
+}
+
+const mapStateToProps = (state) => {
   return {
-    movies: bindActionCreators(moviesLoaded, dispatch),
+    movies: state.moviesStore.movies,
   };
 };
 
-export default connect(null, mapDispatchToProps)(HomePage);
+export default connect(mapStateToProps)(HomePage);
