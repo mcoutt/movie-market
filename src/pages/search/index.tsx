@@ -1,8 +1,12 @@
 import React, { Fragment } from "react";
 import MoviestoreService from "../../services";
 import MovieItem from "../../components/movie-item";
+import { wrapper } from "../../store";
+import {bindActionCreators} from "redux";
+import {connect} from "react-redux";
 
 function SearchPage(props) {
+  console.log("props", props);
   return (
     <div>
       {props.movies.map((item) => (
@@ -17,16 +21,10 @@ function SearchPage(props) {
   );
 }
 
-export async function getStaticProps() {
-  const moviestoreService = new MoviestoreService();
-  const data = await moviestoreService.getMovies();
-  console.log(`=================`);
-  console.log(data);
+const mapStateToProps = (store) => {
   return {
-    props: {
-      movies: data,
-    },
+    movies: store.moviesStore.movies,
   };
-}
+};
 
-export default SearchPage;
+export default connect(mapStateToProps)(SearchPage);

@@ -31,18 +31,13 @@ const combinedReducer = combineReducers({
 });
 
 const reducer = (state, action) => {
-  console.log("=========== reducer ==========");
-  console.log(state);
-  console.log("=========== action ==========");
-  console.log(typeof action);
-  console.log(action.type);
+  console.log(action);
+
   if (action.type === HYDRATE) {
     const nextState = {
       ...state, // use previous state
       ...action.payload, // apply delta from hydration
     };
-    console.log("=========== state ==========");
-    console.log(state);
     // if (state.count.count) nextState.count.count = state.count.count; // preserve count value on client side navigation
     return nextState;
   } else {
@@ -51,7 +46,7 @@ const reducer = (state, action) => {
 };
 
 const initStore = () => {
-  return createStore(reducer, bindMiddleware([]));
+  return createStore(reducer, bindMiddleware([thunkMiddleware]));
 };
 
 export const wrapper = createWrapper(initStore);
