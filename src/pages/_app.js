@@ -35,9 +35,19 @@
 // export default wrapper.withRedux(MyApp);
 
 import { wrapper } from "../store";
+import { MoviestoreServiceProvider } from "../components/moviestore-service-context";
+import App from "../components/app";
+import React from "react";
+import MoviestoreService from "../services";
+
+const moviestoreService = new MoviestoreService();
 
 const WrappedApp = ({ Component, pageProps }) => {
-  return <Component {...pageProps} />;
+  return (
+    <MoviestoreServiceProvider value={moviestoreService}>
+      <Component {...pageProps} />;
+    </MoviestoreServiceProvider>
+  );
 };
 
 export default wrapper.withRedux(WrappedApp);

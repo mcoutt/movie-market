@@ -3,7 +3,7 @@ import { bindActionCreators } from "redux";
 import { moviesLoaded, filterMovie, sortMovie } from "../../actions";
 import { withMoviestoreService } from "../hoc";
 import { connect } from "react-redux";
-import "./genre-filter.scss";
+import classes from "./genre-filter.module.scss";
 import { Link, NavLink, useLocation, withRouter } from "react-router-dom";
 
 const useQuery = () => new URLSearchParams(useLocation().search);
@@ -39,10 +39,10 @@ const GenreFilter = (props) => {
   };
 
   return (
-    <div className="genre-wrapper">
-      <div className="genres">
+    <div className={classes.genreWrapper}>
+      <div className={classes.genres}>
         {genres.map((i) => (
-          <p className="genre" key={i} onClick={handleGenreFilter}>
+          <p className={classes.genre} key={i} onClick={handleGenreFilter}>
             <NavLink
               to={{
                 pathname: "",

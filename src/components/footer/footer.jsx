@@ -1,9 +1,10 @@
 import React from "react";
-import "./footer.scss";
+import classes from "./footer.module.scss";
 
 export const FooterItem = () => {
   return (
-    <div className="col">
+    // <div className={classes.col}>
+    <div>
       <div>MOVIEStore</div>
     </div>
   );

@@ -4,7 +4,7 @@ import MovieList from "../movie-list/movie-list";
 import GenreFilter from "../genreFilter/genre-filter";
 import { FooterItem } from "../footer";
 
-import "./pages.scss";
+import classes from "./pages.module.scss";
 
 export const HomePage = () => {
   return (

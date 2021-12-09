@@ -5,7 +5,7 @@ import { withMoviestoreService } from "../hoc";
 import { moviesLoaded } from "../../actions";
 import { bindActionCreators } from "redux";
 
-import "./movie-list.scss";
+import classes from "./movie-list.module.scss";
 import { EditPopup, DelPopup } from "../popup-movie";
 
 const MovieList = (props) => {
@@ -36,7 +36,7 @@ const MovieList = (props) => {
 
   return (
     <>
-      <div className="movie-list">
+      <div className={classes.movieList}>
         {props.movies.length > 0 ? (
           props.movies.map((item) => (
             <MovieItem

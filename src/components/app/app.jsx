@@ -8,7 +8,7 @@ import {
   Redirect,
 } from "react-router-dom";
 
-import "./app.scss";
+// import classes from "./app.module.scss";
 
 function App() {
   return (
